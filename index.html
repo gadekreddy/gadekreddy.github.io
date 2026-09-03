@@ -3,82 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trinadh Industries | Pharmaceutical APIs, KSMs and Intermediates</title>
-<style>
-* { box-sizing: border-box; }
-body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
-header { background: #0f172a; color: #f1f5f9; padding: 3rem 1.5rem; text-align: center; }
-header h1 { margin: 0 0 0.5rem; font-size: 2.2rem; }
-header p { margin: 0; color: #94a3b8; font-size: 1.05rem; }
-main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-h2 { font-size: 1.5rem; border-bottom: 2px solid #0f172a; padding-bottom: 0.5rem; margin-top: 2.5rem; }
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
-th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
-th { background: #0f172a; color: #f1f5f9; }
-tr:hover { background: #f1f5f9; }
-footer { text-align: center; padding: 2rem 1rem; color: #64748b; font-size: 0.9rem; }
-</style>
+<title>Trinadh Industries | Pharmaceutical APIs, KSMs & Intermediates</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<header>
-<h1>Trinadh Industries</h1>
+<!-- Navigation -->
+<nav class="navbar">
+<div class="container">
+<div class="nav-brand">
+<i class="fas fa-flask"></i>
+<span>Trinadh Industries</span>
+</div>
+<ul class="nav-menu">
+<li><a href="index.html" class="active">Home</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="videos.html">Our Lab</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<div class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+<div class="hero-overlay"></div>
+<div class="container hero-content">
+<h1>Excellence in Pharmaceutical Manufacturing</h1>
+<p>Leading supplier of high-quality APIs, KSMs, and Intermediates</p>
+<div class="hero-buttons">
+<a href="products.html" class="btn btn-primary">Our Products</a>
+<a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+</div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+<div class="container">
+<div class="section-title">
+<h2>Why Choose Us</h2>
+<p>Commitment to quality and innovation</p>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-certificate"></i>
+</div>
+<h3>Quality Certified</h3>
+<p>USP, BP, EP certified products meeting international standards</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-vial"></i>
+</div>
+<h3>Peptide Specialists</h3>
+<p>Advanced peptide APIs including Semaglutide, Tirzepatide & more</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-shipping-fast"></i>
+</div>
+<h3>Reliable Supply</h3>
+<p>Consistent supply chain with timely delivery worldwide</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-microscope"></i>
+</div>
+<h3>State-of-the-Art Lab</h3>
+<p>Modern facilities with advanced quality control systems</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Products Preview -->
+<section class="products-preview">
+<div class="container">
+<div class="section-title">
+<h2>Our Product Range</h2>
+<p>Comprehensive pharmaceutical solutions</p>
+</div>
+<div class="products-tabs">
+<div class="tab-buttons">
+<button class="tab-btn active" data-tab="peptides">Peptide APIs</button>
+<button class="tab-btn" data-tab="other">Other APIs</button>
+<button class="tab-btn" data-tab="manufacturing">Manufacturing</button>
+</div>
+<div class="tab-content">
+<div class="tab-pane active" id="peptides">
+<div class="product-grid">
+<div class="product-item">Etelcalcetide</div>
+<div class="product-item">Teriparatide</div>
+<div class="product-item">Tirzepatide</div>
+<div class="product-item">Abaloparatide</div>
+<div class="product-item">Semaglutide</div>
+</div>
+</div>
+<div class="tab-pane" id="other">
+<div class="product-grid">
+<div class="product-item">Allopurinol</div>
+<div class="product-item">Omeprazole USP</div>
+<div class="product-item">Pregabalin USP</div>
+<div class="product-item">Levetiracetam USP</div>
+<div class="product-item">Rivaroxaban</div>
+</div>
+</div>
+<div class="tab-pane" id="manufacturing">
+<div class="product-grid">
+<div class="product-item">Amlodipine Besylate USP</div>
+<div class="product-item">Esomeprazole Magnesium</div>
+<div class="product-item">Apixaban</div>
+<div class="product-item">Hydroxychloroquine Sulfate</div>
+<div class="product-item">Labetalol Hydrochloride</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center">
+<a href="products.html" class="btn btn-primary">View All Products</a>
+</div>
+</div>
+</section>
+
+<!-- About Preview -->
+<section class="about-preview">
+<div class="container">
+<div class="about-grid">
+<div class="about-content">
+<h2>About Trinadh Industries</h2>
+<p>Located in Hyderabad, India, we are a leading manufacturer and supplier of pharmaceutical APIs, KSMs, and intermediates.</p>
+<p>Our state-of-the-art facility ensures the highest quality standards with USP, BP, and EP certifications.</p>
+<ul class="about-list">
+<li><i class="fas fa-check"></i> GMP Certified Facility</li>
+<li><i class="fas fa-check"></i> Advanced Quality Control</li>
+<li><i class="fas fa-check"></i> Experienced Team</li>
+<li><i class="fas fa-check"></i> Global Supply Network</li>
+</ul>
+<a href="about.html" class="btn btn-secondary">Learn More</a>
+</div>
+<div class="about-image">
+<div class="image-placeholder">
+<i class="fas fa-building"></i>
+<p>Our Facility</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Contact CTA -->
+<section class="cta">
+<div class="container">
+<h2>Ready to Partner With Us?</h2>
+<p>Contact us for inquiries about availability, pricing, and documentation</p>
+<div class="cta-contact">
+<div class="cta-item">
+<i class="fas fa-envelope"></i>
+<span>Trinadhindustrie@gmail.com</span>
+</div>
+<div class="cta-item">
+<i class="fas fa-phone"></i>
+<span>+91 96201 85759</span>
+</div>
+</div>
+<a href="contact.html" class="btn btn-primary">Contact Us Today</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col">
+<h3>Trinadh Industries</h3>
 <p>Trading and supply of Pharmaceutical APIs, KSMs and Intermediates</p>
-</header>
-<main>
-<section>
-<h2>Peptide APIs in Stock</h2>
-<table>
-<thead><tr><th>Product</th></tr></thead>
-<tbody>
-<tr><td>Etelcalcetide</td></tr>
-<tr><td>Teriparatide</td></tr>
-<tr><td>Tirzepatide</td></tr>
-<tr><td>Abaloparatide</td></tr>
-<tr><td>Semaglutide</td></tr>
-</tbody>
-</table>
-</section>
-<section>
-<h2>Other APIs</h2>
-<table>
-<thead>
-<tr><th>Chemical Name</th><th>CAS Number</th><th>Molecular Formula</th><th>Molecular Weight</th><th>Grades</th></tr>
-</thead>
-<tbody>
-<tr>
-<td>Allopurinol</td>
-<td>315-30-0</td>
-<td>C5H4N4O</td>
-<td>136.11 g/mol</td>
-<td>USP / BP / EP</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section>
-<h2>Supplying and Manufacturing</h2>
-<table>
-<thead><tr><th>Product</th></tr></thead>
-<tbody>
-<tr><td>Omeprazole USP</td></tr>
-<tr><td>Amlodipine Besylate USP</td></tr>
-<tr><td>Pregabalin USP</td></tr>
-<tr><td>Levetiracetam USP</td></tr>
-<tr><td>Dextromethorphan Hydrobromide USP</td></tr>
-<tr><td>Esomeprazole Magnesium Trihydrate USP</td></tr>
-<tr><td>Rivaroxaban</td></tr>
-<tr><td>Labetalol Hydrochloride USP</td></tr>
-<tr><td>5,6-Dihydro-3-(4-morpholinyl)-1-[4-(2-oxo-1-piperidinyl)phenyl]-2(1H)-pyridinone (AXBN20)</td></tr>
-<tr><td>Hydroxychloroquine Sulfate USP</td></tr>
-<tr><td>Apixaban</td></tr>
-</tbody>
-</table>
-</section>
-<section>
-<h2>Contact</h2>
-<p>For inquiries about availability, pricing, and documentation, please get in touch.</p>
-</section>
-</main>
-<footer>Trinadh Industries. All rights reserved.</footer>
+<div class="social-links">
+<a href="#"><i class="fab fa-linkedin"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+</div>
+</div>
+<div class="footer-col">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h3>Contact Info</h3>
+<ul class="contact-info">
+<li><i class="fas fa-map-marker-alt"></i> Plot No 9/6-B, Road No -5, IDA, Nacharam, Hyderabad, Telangana - 500076, India</li>
+<li><i class="fas fa-phone"></i> +91 96201 85759</li>
+<li><i class="fas fa-envelope"></i> Trinadhindustrie@gmail.com</li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
