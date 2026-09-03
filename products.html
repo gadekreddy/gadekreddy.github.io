@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Trinadh Industries</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .products-section {
+            padding: 4rem 0;
+        }
+        
+        .product-category {
+            margin-bottom: 4rem;
+        }
+        
+        .product-category h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .product-table th,
+        .product-table td {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .product-table th {
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        .product-table tr:hover {
+            background: var(--bg-light);
+        }
+        
+        .product-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .product-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .product-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .spec-item {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .spec-label {
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .spec-value {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-flask"></i>
+                <span>Trinadh Industries</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="videos.html">Our Lab</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Products</h1>
+            <p>High-Quality Pharmaceutical APIs, KSMs & Intermediates</p>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <!-- Peptide APIs -->
+            <div class="product-category">
+                <h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h3>Etelcalcetide</h3>
+                        <p>High-purity peptide API for pharmaceutical applications</p>
+                    </div>
+                    <div class="product-card">
+                        <h3>Teriparatide</h3>
+                        <p>Quality assured peptide for therapeutic use</p>
+                    </div>
+                    <div class="product-card">
+                        <h3>Tirzepatide</h3>
+                        <p>Advanced peptide API meeting international standards</p>
+                    </div>
+                    <div class="product-card">
+                        <h3>Abaloparatide</h3>
+                        <p>Premium quality peptide for medical applications</p>
+                    </div>
+                    <div class="product-card">
+                        <h3>Semaglutide</h3>
+                        <p>Top-grade peptide API with full documentation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other APIs -->
+            <div class="product-category">
+                <h2><i class="fas fa-pills"></i> Other APIs</h2>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Chemical Name</th>
+                            <th>CAS Number</th>
+                            <th>Molecular Formula</th>
+                            <th>Molecular Weight</th>
+                            <th>Grades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Allopurinol</td>
+                            <td>315-30-0</td>
+                            <td>C5H4N4O</td>
+                            <td>136.11 g/mol</td>
+                            <td>USP / BP / EP</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Manufacturing Products -->
+            <div class="product-category">
+                <h2><i class="fas fa-industry"></i> Supplying & Manufacturing</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h3>Omeprazole USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Amlodipine Besylate USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Pregabalin USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Levetiracetam USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Dextromethorphan Hydrobromide USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Esomeprazole Magnesium Trihydrate USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Rivaroxaban</h3>
+                        <p>High-quality anticoagulant API</p>
+                    </div>
+                    <div class="product-card">
+                        <h3>Labetalol Hydrochloride USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Hydroxychloroquine Sulfate USP</h3>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-label">Grade</div>
+                                <div class="spec-value">USP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <h3>Apixaban</h3>
+                        <p>Premium anticoagulant API</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
