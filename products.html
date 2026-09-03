@@ -1,290 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products | Trinadh Industries</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .page-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            padding: 8rem 0 4rem;
-            text-align: center;
-            margin-top: 60px;
-        }
-        
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .products-section {
-            padding: 4rem 0;
-        }
-        
-        .product-category {
-            margin-bottom: 4rem;
-        }
-        
-        .product-category h2 {
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--accent-color);
-        }
-        
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .product-table th,
-        .product-table td {
-            padding: 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .product-table th {
-            background: var(--primary-color);
-            color: var(--white);
-            font-weight: 600;
-        }
-        
-        .product-table tr:hover {
-            background: var(--bg-light);
-        }
-        
-        .product-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .product-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .product-specs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .spec-item {
-            background: var(--bg-light);
-            padding: 1rem;
-            border-radius: 5px;
-        }
-        
-        .spec-label {
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        .spec-value {
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products | Trinadh Industries</title>
+<meta name="description" content="Peptide APIs, pharmaceutical APIs, KSMs and intermediates supplied and manufactured by Trinadh Industries, with CAS numbers, molecular data, SMILES and InChIKeys.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.page-header {
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: var(--white);
+padding: 8rem 0 4rem;
+text-align: center;
+margin-top: 60px;
+}
+
+.page-header h1 {
+font-size: 3rem;
+margin-bottom: 1rem;
+}
+
+.products-section {
+padding: 4rem 0;
+}
+
+.product-category {
+margin-bottom: 4rem;
+}
+
+.product-category h2 {
+color: var(--primary-color);
+margin-bottom: 0.5rem;
+padding-bottom: 1rem;
+border-bottom: 3px solid var(--accent-color);
+}
+
+.category-note {
+color: var(--text-light);
+margin: 1rem 0 2rem;
+}
+
+.spec-item {
+background: var(--bg-light);
+padding: 0.75rem 1rem;
+border-radius: 5px;
+}
+
+.spec-label {
+font-weight: 600;
+color: var(--text-light);
+font-size: 0.82rem;
+}
+
+.spec-value {
+color: var(--text-dark);
+font-weight: 500;
+}
+</style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <i class="fas fa-flask"></i>
-                <span>Trinadh Industries</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="products.html" class="active">Products</a></li>
-                <li><a href="videos.html">Our Lab</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar">
+<div class="container">
+<div class="nav-brand">
+<i class="fas fa-flask"></i>
+<span>Trinadh Industries</span>
+</div>
+<ul class="nav-menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="products.html" class="active">Products</a></li>
+<li><a href="videos.html">Our Lab</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<div class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</nav>
 
-    <section class="page-header">
-        <div class="container">
-            <h1>Our Products</h1>
-            <p>High-Quality Pharmaceutical APIs, KSMs & Intermediates</p>
-        </div>
-    </section>
+<section class="page-header">
+<div class="container">
+<h1>Our Products</h1>
+<p>High-Quality Pharmaceutical APIs, KSMs &amp; Intermediates</p>
+</div>
+</section>
 
-    <section class="products-section">
-        <div class="container">
-            <!-- Peptide APIs -->
-            <div class="product-category">
-                <h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <h3>Etelcalcetide</h3>
-                        <p>High-purity peptide API for pharmaceutical applications</p>
-                    </div>
-                    <div class="product-card">
-                        <h3>Teriparatide</h3>
-                        <p>Quality assured peptide for therapeutic use</p>
-                    </div>
-                    <div class="product-card">
-                        <h3>Tirzepatide</h3>
-                        <p>Advanced peptide API meeting international standards</p>
-                    </div>
-                    <div class="product-card">
-                        <h3>Abaloparatide</h3>
-                        <p>Premium quality peptide for medical applications</p>
-                    </div>
-                    <div class="product-card">
-                        <h3>Semaglutide</h3>
-                        <p>Top-grade peptide API with full documentation</p>
-                    </div>
-                </div>
-            </div>
+<section class="products-section">
+<div class="container">
 
-            <!-- Other APIs -->
-            <div class="product-category">
-                <h2><i class="fas fa-pills"></i> Other APIs</h2>
-                <table class="product-table">
-                    <thead>
-                        <tr>
-                            <th>Chemical Name</th>
-                            <th>CAS Number</th>
-                            <th>Molecular Formula</th>
-                            <th>Molecular Weight</th>
-                            <th>Grades</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Allopurinol</td>
-                            <td>315-30-0</td>
-                            <td>C5H4N4O</td>
-                            <td>136.11 g/mol</td>
-                            <td>USP / BP / EP</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<!-- Peptide APIs -->
+<div class="product-category">
+<h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
+<p class="category-note">High-purity peptide APIs, ready for supply with full documentation.</p>
+<div class="compound-grid">
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=71511839&t=l" alt="Etelcalcetide structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Etelcalcetide</h3>
+<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Calcimimetic peptide API used to manage secondary hyperparathyroidism.</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">1262780-97-1</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C38H73N21O10S2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1048.3 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
+</div>
+<span class="compound-code-label">InChIKey</span>
+<div class="compound-code">ANIAZGVDEUQPRI-ZJQCGQFWSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/71511839" target="_blank" rel="noopener">View on PubChem (CID 71511839) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=16133850&t=l" alt="Teriparatide structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Teriparatide</h3>
+<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Recombinant PTH(1-34) fragment peptide used in osteoporosis therapy.</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">52232-67-4</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C181H291N55O51S2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4118 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
+</div>
+<span class="compound-code-label">InChIKey</span>
+<div class="compound-code">OGBMKVWORPGQRR-UMXFMPSGSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/16133850" target="_blank" rel="noopener">View on PubChem (CID 16133850) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=166567236&t=l" alt="Tirzepatide structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Tirzepatide</h3>
+<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Dual GIP/GLP-1 receptor agonist peptide for type 2 diabetes and weight management.</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">2023788-19-2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C225H348N48O68</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4813 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
+</div>
+<span class="compound-code-label">InChIKey</span>
+<div class="compound-code">BTSOGEDATSQOAF-MCNPHUAVSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/166567236" target="_blank" rel="noopener">View on PubChem (CID 166567236) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=76943386&t=l" alt="Abaloparatide structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Abaloparatide</h3>
+<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Synthetic PTHrP analog peptide indicated for osteoporosis.</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">247062-33-5</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C174H300N56O49</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">3961 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
+</div>
+<span class="compound-code-label">InChIKey</span>
+<div class="compound-code">BVISQZFBLRSESR-XSCWXTNMSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/76943386" target="_blank" rel="noopener">View on PubChem (CID 76943386) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=56843331&t=l" alt="Semaglutide structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Semaglutide</h3>
+<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">GLP-1 receptor agonist peptide used in diabetes and weight-management therapies.</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">910463-68-2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C187H291N45O59</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4114 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
+</div>
+<span class="compound-code-label">InChIKey</span>
+<div class="compound-code">DLSWIYLPEUIQAV-CCUURXOWSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/56843331" target="_blank" rel="noopener">View on PubChem (CID 56843331) &rarr;</a></div>
+</div>
+</div>
+</div>
+</div>
 
-            <!-- Manufacturing Products -->
-            <div class="product-category">
-                <h2><i class="fas fa-industry"></i> Supplying & Manufacturing</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <h3>Omeprazole USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Amlodipine Besylate USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Pregabalin USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Levetiracetam USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Dextromethorphan Hydrobromide USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Esomeprazole Magnesium Trihydrate USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Rivaroxaban</h3>
-                        <p>High-quality anticoagulant API</p>
-                    </div>
-                    <div class="product-card">
-                        <h3>Labetalol Hydrochloride USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Hydroxychloroquine Sulfate USP</h3>
-                        <div class="product-specs">
-                            <div class="spec-item">
-                                <div class="spec-label">Grade</div>
-                                <div class="spec-value">USP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <h3>Apixaban</h3>
-                        <p>Premium anticoagulant API</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Other APIs -->
+<div class="product-category">
+<h2><i class="fas fa-pills"></i> Other APIs</h2>
+<p class="category-note">Small-molecule API available in stock.</p>
+<div class="compound-grid">
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135401907&t=l" alt="Allopurinol structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Allopurinol</h3>
+<p class="compound-syn">1H-Pyrazolo[3,4-d]pyrimidin-4-ol, Zyloric</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">315-30-0</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C5H4N4O</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">136.11 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP / BP / EP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">C1=NNC2=C1C(=O)NC=N2</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">OFCNXPDARWKPPY-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/135401907" target="_blank" rel="noopener">View on PubChem (CID 135401907) &rarr;</a></div>
+</div>
+</div>
+</div>
+</div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!-- Manufacturing Products -->
+<div class="product-category">
+<h2><i class="fas fa-industry"></i> Supplying &amp; Manufacturing</h2>
+<p class="category-note">Pharmaceutical APIs, KSMs and intermediates we trade and manufacture.</p>
+<div class="compound-grid">
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=4594&t=l" alt="Omeprazole USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Omeprazole USP</h3>
+<p class="compound-syn">Losec, Antra</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">73590-58-6</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C17H19N3O3S</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">345.4 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">SUBDBMMJDZJVOS-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/4594" target="_blank" rel="noopener">View on PubChem (CID 4594) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=60496&t=l" alt="Amlodipine Besylate USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Amlodipine Besylate USP</h3>
+<p class="compound-syn">Amlodipine besilate, Amlodipine benzenesulfonate</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">111470-99-6</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C26H31ClN2O8S</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">567.1 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CCOC(=O)C1=C(NC(=C(C1C2=CC=CC=C2Cl)C(=O)OC)C)COCCN.C1=CC=C(C=C1)S(=O)(=O)O</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">ZPBWCRDSRKPIDG-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/60496" target="_blank" rel="noopener">View on PubChem (CID 60496) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5486971&t=l" alt="Pregabalin USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Pregabalin USP</h3>
+<p class="compound-syn">Lyrica, 3-isobutyl GABA</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">148553-50-8</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C8H17NO2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">159.23 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CC(C)CC(CC(=O)O)CN</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">AYXYPKUFHZROOJ-ZETCQYMHSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5486971" target="_blank" rel="noopener">View on PubChem (CID 5486971) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5284583&t=l" alt="Levetiracetam USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Levetiracetam USP</h3>
+<p class="compound-syn">Keppra, (2S)-2-(2-oxopyrrolidin-1-yl)butanamide</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">102767-28-2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C8H14N2O2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">170.21 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CCC(C(=O)N)N1CCCC1=O</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">HPHUVLMMVZITSG-LURJTMIESA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5284583" target="_blank" rel="noopener">View on PubChem (CID 5284583) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5464025&t=l" alt="Dextromethorphan Hydrobromide USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Dextromethorphan Hydrobromide USP</h3>
+<p class="compound-syn">Delsym, Antussan</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">125-69-9</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C18H26BrNO</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">352.3 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CN1CCC23CCCCC2C1CC4=C3C=C(C=C4)OC.Br</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">MISZALMBODQYFT-URVXVIKDSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5464025" target="_blank" rel="noopener">View on PubChem (CID 5464025) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=21121303&t=l" alt="Esomeprazole Magnesium Trihydrate USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Esomeprazole Magnesium Trihydrate USP</h3>
+<p class="compound-syn">Esomeprazole magnesium trihydrate, Nexium</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">217087-09-7</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C34H42MgN6O9S2</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">767.2 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C([N-]2)C=CC(=C3)OC.CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C([N-]2)C=CC(=C3)OC.O.O.O.[Mg+2]</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">VEVZQDGATGBLIC-OXLUMUBXSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/21121303" target="_blank" rel="noopener">View on PubChem (CID 21121303) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9875401&t=l" alt="Rivaroxaban structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Rivaroxaban</h3>
+<p class="compound-syn">Xarelto, BAY 59-7939</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">366789-02-8</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C19H18ClN3O5S</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">435.9 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">—</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">C1COCC(=O)N1C2=CC=C(C=C2)N3CC(OC3=O)CNC(=O)C4=CC=C(S4)Cl</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">KGFYHTZWPPHNLQ-AWEZNQCLSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/9875401" target="_blank" rel="noopener">View on PubChem (CID 9875401) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=71412&t=l" alt="Labetalol Hydrochloride USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Labetalol Hydrochloride USP</h3>
+<p class="compound-syn">Labetalol HCl, Labrocol</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">32780-64-6</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C19H25ClN2O3</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">364.9 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CC(CCC1=CC=CC=C1)NCC(C2=CC(=C(C=C2)O)C(=O)N)O.Cl</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">WQVZLXWQESQGIF-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/71412" target="_blank" rel="noopener">View on PubChem (CID 71412) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=22352226&t=l" alt="AXBN20 structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>AXBN20</h3>
+<p class="compound-syn">5,6-Dihydro-3-(4-morpholinyl)-1-[4-(2-oxo-1-piperidinyl)phenyl]-2(1H)-pyridinone</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">545445-44-1</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C20H25N3O3</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">355.4 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Reference standard / intermediate</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">C1CCN(C(=O)C1)C2=CC=C(C=C2)N3CCC=C(C3=O)N4CCOCC4</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">SCVWQFDPLBFZAP-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/22352226" target="_blank" rel="noopener">View on PubChem (CID 22352226) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=12947&t=l" alt="Hydroxychloroquine Sulfate USP structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Hydroxychloroquine Sulfate USP</h3>
+<p class="compound-syn">Hydroxychloroquine sulphate, Ercoquin</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">747-36-4</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C18H28ClN3O5S</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">434.0 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">CCN(CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl)CCO.OS(=O)(=O)O</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">JCBIVZZPXRZKTI-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/12947" target="_blank" rel="noopener">View on PubChem (CID 12947) &rarr;</a></div>
+</div>
+</div>
+<div class="compound-card">
+<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=10182969&t=l" alt="Apixaban structure" loading="lazy"></div>
+<div class="compound-body">
+<h3>Apixaban</h3>
+<p class="compound-syn">Eliquis, BMS-562247-01</p>
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">503612-47-3</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C25H25N5O4</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">459.5 g/mol</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">—</div></div>
+</div>
+<span class="compound-code-label">Canonical SMILES</span>
+<div class="compound-code">COC1=CC=C(C=C1)N2C3=C(CCN(C3=O)C4=CC=C(C=C4)N5CCCCC5=O)C(=N2)C(=O)N</div>
+<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
+<div class="compound-code">QNZCBYKSOIHPEH-UHFFFAOYSA-N</div>
+<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/10182969" target="_blank" rel="noopener">View on PubChem (CID 10182969) &rarr;</a></div>
+</div>
+</div>
+</div>
+</div>
 
-    <script src="js/main.js"></script>
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+<div class="footer-bottom">
+<p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
