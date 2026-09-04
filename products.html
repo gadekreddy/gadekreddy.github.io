@@ -27,6 +27,7 @@ padding: 4rem 0;
 
 .product-category {
 margin-bottom: 4rem;
+scroll-margin-top: 90px;
 }
 
 .product-category h2 {
@@ -138,7 +139,15 @@ background: #e0f2f1;
 <ul class="nav-menu">
 <li><a href="index.html">Home</a></li>
 <li><a href="about.html">About Us</a></li>
-<li><a href="products.html" class="active">Products</a></li>
+<li class="nav-dropdown">
+<a href="products.html" class="active">Products <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="#peptide-apis">Peptide APIs</a></li>
+<li><a href="#other-apis">Other APIs</a></li>
+<li><a href="#manufacturing">Supplying &amp; Manufacturing</a></li>
+<li><a href="#impurity-standards">Impurity Reference Standards</a></li>
+</ul>
+</li>
 <li><a href="videos.html">Our Lab</a></li>
 <li><a href="contact.html">Contact</a></li>
 </ul>
@@ -161,7 +170,7 @@ background: #e0f2f1;
 <div class="container">
 
 <!-- Peptide APIs -->
-<div class="product-category">
+<div class="product-category" id="peptide-apis">
 <h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
 <p class="category-note">High-purity peptide APIs, ready for supply with full documentation.</p>
 <div class="compound-grid">
@@ -521,7 +530,7 @@ background: #e0f2f1;
 </div>
 
 <!-- Other APIs -->
-<div class="product-category">
+<div class="product-category" id="other-apis">
 <h2><i class="fas fa-pills"></i> Other APIs</h2>
 <p class="category-note">Small-molecule API available in stock.</p>
 <div class="compound-grid">
@@ -547,7 +556,7 @@ background: #e0f2f1;
 </div>
 
 <!-- Manufacturing Products -->
-<div class="product-category">
+<div class="product-category" id="manufacturing">
 <h2><i class="fas fa-industry"></i> Supplying &amp; Manufacturing</h2>
 <p class="category-note">Pharmaceutical APIs, KSMs and intermediates we trade and manufacture.</p>
 <div class="compound-grid">
@@ -753,7 +762,7 @@ background: #e0f2f1;
 </div>
 
 <!-- Impurity Reference Standards -->
-<div class="product-category">
+<div class="product-category" id="impurity-standards">
 <h2><i class="fas fa-vial-circle-check"></i> Impurity Reference Standards</h2>
 <p class="category-note">Characterized process- and degradation-related impurity / related-substance reference standards for peptide APIs, supplied for analytical method development, qualification and stability studies. Select a parent peptide to view its available impurities.</p>
 <div class="imp-tabs">
