@@ -1,63 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login | Trinadh Industries</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | Trinadh Industries</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.login-section {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+padding: 2rem;
+}
+
+.login-card {
+background: var(--white);
+border-radius: 12px;
+box-shadow: var(--shadow-hover);
+padding: 2.5rem;
+width: 100%;
+max-width: 400px;
+}
+
+.login-card .nav-brand {
+display: flex;
+align-items: center;
+gap: 10px;
+justify-content: center;
+font-size: 1.4rem;
+font-weight: 700;
+color: var(--primary-color);
+margin-bottom: 0.5rem;
+}
+
+.login-card h1 {
+text-align: center;
+font-size: 1.3rem;
+color: var(--text-dark);
+margin-bottom: 2rem;
+font-weight: 500;
+}
+
+.login-error {
+background: #fdecea;
+color: #b3261e;
+border-radius: 6px;
+padding: 0.7rem 1rem;
+font-size: 0.88rem;
+margin-bottom: 1.2rem;
+display: none;
+}
+
+.login-back {
+text-align: center;
+margin-top: 1.5rem;
+font-size: 0.88rem;
+}
+
+.login-back a {
+color: var(--primary-color);
+text-decoration: none;
+font-weight: 600;
+}
+
+.login-back a:hover {
+text-decoration: underline;
+}
+
+button[disabled] {
+opacity: 0.65;
+cursor: not-allowed;
+}
+</style>
 </head>
 <body>
-  <div class="login-container">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="nav-brand-icon" style="margin: 0 auto 1rem; width: 48px; height: 48px; font-size: 1.5rem;">T</div>
-        <h1>Admin Sign In</h1>
-        <p>Trinadh Industries — Admin Panel</p>
-      </div>
-      
-      <form class="login-form" id="loginForm">
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="loginEmail" required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="loginPassword" required>
-        </div>
-        
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
-          <i class="fas fa-sign-in-alt"></i> Sign In
-        </button>
-      </form>
-      
-      <div class="login-footer">
-        <a href="index.html"><i class="fas fa-arrow-left"></i> Back to website</a>
-      </div>
-    </div>
-  </div>
+<section class="login-section">
+<div class="login-card">
+<div class="nav-brand"><i class="fas fa-flask"></i><span>Trinadh Industries</span></div>
+<h1>Admin Sign In</h1>
 
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-    
-    const loginForm = document.getElementById('loginForm');
-    
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = 'admin.html';
-      } catch (error) {
-        alert('Login failed: ' + error.message);
-      }
-    });
-  </script>
+<p class="login-error" id="loginError"></p>
+
+<form id="loginForm">
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" id="email" name="email" required autocomplete="username">
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<input type="password" id="password" name="password" required autocomplete="current-password">
+</div>
+<button type="submit" class="btn btn-primary" id="loginBtn" style="width: 100%;">
+<i class="fas fa-right-to-bracket"></i> Sign In
+</button>
+</form>
+
+<p class="login-back"><a href="index.html">&larr; Back to website</a></p>
+</div>
+</section>
+
+<script type="module">
+import { auth } from './js/firebase-config.js';
+import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+const form = document.getElementById('loginForm');
+const errorBox = document.getElementById('loginError');
+const loginBtn = document.getElementById('loginBtn');
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.href = 'admin.html';
+  }
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorBox.style.display = 'none';
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in&hellip;';
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = 'admin.html';
+  } catch (err) {
+    let msg = 'Sign in failed. Please check your email and password.';
+    if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+      msg = 'Incorrect email or password.';
+    } else if (err.code === 'auth/too-many-requests') {
+      msg = 'Too many attempts. Please wait a moment and try again.';
+    }
+    errorBox.textContent = msg;
+    errorBox.style.display = 'block';
+    loginBtn.disabled = false;
+    loginBtn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Sign In';
+  }
+});
+</script>
 </body>
 </html>

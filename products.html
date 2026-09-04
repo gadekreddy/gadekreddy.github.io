@@ -1,453 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products | Trinadh Industries</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products | Trinadh Industries</title>
+<meta name="description" content="Peptide APIs, pharmaceutical APIs, KSMs, intermediates and impurity reference standards supplied and manufactured by Trinadh Industries, with CAS numbers, molecular data, SMILES and InChIKeys.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.page-header {
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: var(--white);
+padding: 8rem 0 4rem;
+text-align: center;
+margin-top: 60px;
+}
+
+.page-header h1 {
+font-size: 3rem;
+margin-bottom: 1rem;
+}
+
+.search-section {
+background: var(--bg-light);
+padding: 2rem 0;
+border-bottom: 1px solid #e5e5e5;
+}
+
+.search-box {
+max-width: 560px;
+margin: 0 auto;
+position: relative;
+}
+
+.search-box i {
+position: absolute;
+left: 1.2rem;
+top: 50%;
+transform: translateY(-50%);
+color: var(--text-light);
+}
+
+.search-box input {
+width: 100%;
+padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+border: 2px solid #ddd;
+border-radius: 50px;
+font-family: inherit;
+font-size: 0.98rem;
+transition: var(--transition);
+background: var(--white);
+}
+
+.search-box input:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.12);
+}
+
+.search-clear {
+position: absolute;
+right: 1rem;
+top: 50%;
+transform: translateY(-50%);
+background: none;
+border: none;
+color: var(--text-light);
+cursor: pointer;
+font-size: 1rem;
+display: none;
+}
+
+.search-status {
+text-align: center;
+color: var(--text-light);
+font-size: 0.88rem;
+margin-top: 0.75rem;
+}
+
+.products-section {
+padding: 4rem 0;
+}
+
+.product-category {
+margin-bottom: 4rem;
+scroll-margin-top: 90px;
+}
+
+.product-category.is-hidden-by-search {
+display: none;
+}
+
+.product-category h2 {
+color: var(--primary-color);
+margin-bottom: 0.5rem;
+padding-bottom: 1rem;
+border-bottom: 3px solid var(--accent-color);
+}
+
+.category-note {
+color: var(--text-light);
+margin: 1rem 0 2rem;
+}
+
+.spec-item {
+background: var(--bg-light);
+padding: 0.75rem 1rem;
+border-radius: 5px;
+}
+
+.spec-label {
+font-weight: 600;
+color: var(--text-light);
+font-size: 0.82rem;
+}
+
+.spec-value {
+color: var(--text-dark);
+font-weight: 500;
+}
+
+.compound-desc {
+color: var(--text-light);
+font-size: 0.92rem;
+margin-bottom: 1rem;
+}
+
+.compound-iupac {
+color: var(--text-light);
+font-size: 0.78rem;
+font-family: 'Courier New', Courier, monospace;
+margin-bottom: 0.5rem;
+}
+
+.no-structure-note {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 0.6rem;
+height: 100%;
+background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+color: var(--white);
+text-align: center;
+font-size: 0.85rem;
+padding: 1rem;
+}
+
+.no-structure-note i {
+font-size: 2.2rem;
+}
+
+.imp-tabs .tab-buttons {
+flex-wrap: wrap;
+gap: 0.6rem;
+}
+
+.imp-tabs .tab-btn {
+padding: 0.6rem 1.3rem;
+font-size: 0.9rem;
+}
+
+.imp-count {
+opacity: 0.8;
+font-size: 0.82rem;
+}
+
+.impurity-table-wrap {
+overflow-x: auto;
+}
+
+.impurity-table {
+width: 100%;
+border-collapse: collapse;
+background: var(--white);
+border-radius: 8px;
+overflow: hidden;
+}
+
+.impurity-table th,
+.impurity-table td {
+padding: 0.75rem 1rem;
+text-align: left;
+border-bottom: 1px solid #e5e5e5;
+font-size: 0.92rem;
+}
+
+.impurity-table th {
+background: var(--primary-color);
+color: var(--white);
+font-weight: 600;
+position: sticky;
+top: 0;
+}
+
+.impurity-table tbody tr:nth-child(even) {
+background: var(--bg-light);
+}
+
+.impurity-table tbody tr:hover {
+background: #e0f2f1;
+}
+
+.impurity-table tr.is-hidden-by-search {
+display: none;
+}
+
+.loading-note {
+text-align: center;
+color: var(--text-light);
+padding: 2rem 0;
+}
+</style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="index.html" class="nav-brand">
-        <div class="nav-brand-icon">T</div>
-        <span>Trinadh Industries</span>
-      </a>
-      <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li class="nav-dropdown">
-          <a href="products.html" class="active">Products <i class="fas fa-chevron-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="#peptide-apis">Peptide APIs</a></li>
-            <li><a href="#other-apis">Other APIs</a></li>
-            <li><a href="#manufacturing">Supplying & Manufacturing</a></li>
-            <li><a href="#impurity-standards">Impurity Reference Standards</a></li>
-          </ul>
-        </li>
-        <li><a href="videos.html">Our Lab</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </nav>
+<nav class="navbar">
+<div class="container">
+<div class="nav-brand">
+<i class="fas fa-flask"></i>
+<span>Trinadh Industries</span>
+</div>
+<ul class="nav-menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About Us</a></li>
+<li class="nav-dropdown">
+<a href="products.html" class="active">Products <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="#peptide-apis">Peptide APIs</a></li>
+<li><a href="#other-apis">Other APIs</a></li>
+<li><a href="#manufacturing">Supplying &amp; Manufacturing</a></li>
+<li><a href="#impurity-standards">Impurity Reference Standards</a></li>
+</ul>
+</li>
+<li><a href="videos.html">Our Lab</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+<div class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="hero" style="min-height: 400px;">
-    <div class="container">
-      <div class="hero-content">
-        <span class="section-label" style="color: var(--accent);">Product Catalog</span>
-        <h1>High-Quality Pharmaceutical APIs, KSMs & Intermediates</h1>
-        <p class="hero-subtitle">Comprehensive range of certified pharmaceutical ingredients</p>
-      </div>
-    </div>
-  </section>
+<section class="page-header">
+<div class="container">
+<h1>Our Products</h1>
+<p>High-Quality Pharmaceutical APIs, KSMs &amp; Intermediates</p>
+</div>
+</section>
 
-  <!-- Products Section -->
-  <section class="section">
-    <div class="container">
-      <!-- Peptide APIs -->
-      <div id="peptide-apis" style="margin-bottom: 4rem;">
-        <div class="section-header">
-          <span class="section-label">Category 01</span>
-          <h2 class="section-title">Peptide APIs (In Stock)</h2>
-          <p class="section-subtitle">High-purity peptide APIs, ready for supply with full documentation</p>
-        </div>
-        
-        <div class="compound-grid" id="peptide-compounds">
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-dna" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Semaglutide</h3>
-                <span class="compound-badge">In Stock</span>
-              </div>
-              <p class="compound-syn">GLP-1 receptor agonist for diabetes treatment</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">910463-68-2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C187H291N45O59</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">4113.58</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Purity</span>
-                  <span class="spec-value">≥99%</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-dna" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Tirzepatide</h3>
-                <span class="compound-badge">In Stock</span>
-              </div>
-              <p class="compound-syn">Dual GIP/GLP-1 receptor agonist</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">2023788-19-2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C225H348N48O68</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">4813.55</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Purity</span>
-                  <span class="spec-value">≥98%</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-dna" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Teriparatide</h3>
-                <span class="compound-badge">In Stock</span>
-              </div>
-              <p class="compound-syn">Parathyroid hormone analog for osteoporosis</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">52232-67-4</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C181H291N55O51S2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">4117.72</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Purity</span>
-                  <span class="spec-value">≥99%</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<section class="search-section">
+<div class="container">
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" id="compoundSearch" placeholder="Search by compound name, CAS number, or synonym...">
+<button type="button" class="search-clear" id="searchClear" aria-label="Clear search">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<p class="search-status" id="searchStatus"></p>
+</div>
+</section>
 
-      <!-- Other APIs -->
-      <div id="other-apis" style="margin-bottom: 4rem;">
-        <div class="section-header">
-          <span class="section-label">Category 02</span>
-          <h2 class="section-title">Other APIs</h2>
-          <p class="section-subtitle">Small-molecule APIs available in stock</p>
-        </div>
-        
-        <div class="compound-grid" id="other-compounds">
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-pills" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Omeprazole USP</h3>
-                <span class="compound-badge">USP</span>
-              </div>
-              <p class="compound-syn">Proton pump inhibitor</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">73590-58-6</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C17H19N3O3S</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">345.42</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Grade</span>
-                  <span class="spec-value">USP</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-pills" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Pregabalin USP</h3>
-                <span class="compound-badge">USP</span>
-              </div>
-              <p class="compound-syn">Anticonvulsant and neuropathic pain agent</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">148553-50-8</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C8H17NO2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">159.23</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Grade</span>
-                  <span class="spec-value">USP</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-pills" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Levetiracetam USP</h3>
-                <span class="compound-badge">USP</span>
-              </div>
-              <p class="compound-syn">Antiepileptic drug</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">102767-28-2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C8H14N2O2</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">170.21</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Grade</span>
-                  <span class="spec-value">USP</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<section class="products-section">
+<div class="container">
 
-      <!-- Manufacturing -->
-      <div id="manufacturing" style="margin-bottom: 4rem;">
-        <div class="section-header">
-          <span class="section-label">Category 03</span>
-          <h2 class="section-title">Supplying & Manufacturing</h2>
-          <p class="section-subtitle">Pharmaceutical APIs, KSMs and intermediates we trade and manufacture</p>
-        </div>
-        
-        <div class="compound-grid" id="manufacturing-compounds">
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-industry" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Amlodipine Besylate USP</h3>
-                <span class="compound-badge">USP</span>
-              </div>
-              <p class="compound-syn">Calcium channel blocker</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">111470-99-6</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C26H31ClN2O8S</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">567.05</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Grade</span>
-                  <span class="spec-value">USP</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-industry" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Rivaroxaban</h3>
-                <span class="compound-badge">EP</span>
-              </div>
-              <p class="compound-syn">Anticoagulant factor Xa inhibitor</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">CAS No.</span>
-                  <span class="spec-value">366789-02-8</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MF</span>
-                  <span class="spec-value">C19H18ClN3O5S</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">MW</span>
-                  <span class="spec-value">435.88</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Grade</span>
-                  <span class="spec-value">EP</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- Peptide APIs -->
+<div class="product-category" id="peptide-apis">
+<h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
+<p class="category-note">High-purity peptide APIs, ready for supply with full documentation.</p>
+<div class="compound-grid" id="grid-peptide-apis">
+<p class="loading-note">Loading compounds&hellip;</p>
+</div>
+</div>
 
-      <!-- Impurity Standards -->
-      <div id="impurity-standards">
-        <div class="section-header">
-          <span class="section-label">Category 04</span>
-          <h2 class="section-title">Impurity Reference Standards</h2>
-          <p class="section-subtitle">Characterized process- and degradation-related impurity / related-substance reference standards for peptide APIs</p>
-        </div>
-        
-        <div class="compound-grid" id="impurity-compounds">
-          <div class="compound-card">
-            <div class="compound-image">
-              <i class="fas fa-vial" style="font-size: 3rem; color: var(--accent);"></i>
-            </div>
-            <div class="compound-body">
-              <div class="compound-header">
-                <h3>Semaglutide Impurities</h3>
-                <span class="compound-badge">Reference</span>
-              </div>
-              <p class="compound-syn">Process and degradation impurities for analytical method development</p>
-              <div class="compound-specs">
-                <div class="spec-item">
-                  <span class="spec-label">Type</span>
-                  <span class="spec-value">Process Impurity</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Application</span>
-                  <span class="spec-value">HPLC/LC-MS</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Purity</span>
-                  <span class="spec-value">≥95%</span>
-                </div>
-                <div class="spec-item">
-                  <span class="spec-label">Documentation</span>
-                  <span class="spec-value">CoA, NMR, MS</span>
-                </div>
-              </div>
-              <div class="compound-link">
-                <a href="contact.html">Request Quote <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- Other APIs -->
+<div class="product-category" id="other-apis">
+<h2><i class="fas fa-pills"></i> Other APIs</h2>
+<p class="category-note">Small-molecule API available in stock.</p>
+<div class="compound-grid" id="grid-other-apis">
+<p class="loading-note">Loading compounds&hellip;</p>
+</div>
+</div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h3>Trinadh Industries</h3>
-          <p>Trading and supply of Pharmaceutical APIs, KSMs and Intermediates</p>
-        </div>
-        
-        <div class="footer-col">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-col">
-          <h3>Contact Info</h3>
-          <ul>
-            <li><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Plot No 9/6-B, Road No -5, IDA, Nacharam, Hyderabad, Telangana - 500076, India</li>
-            <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +91 96201 85759</li>
-            <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> Trinadhindustrie@gmail.com</li>
-          </ul>
-        </div>
-        
-        <div class="footer-col">
-          <h3>Business Hours</h3>
-          <ul>
-            <li>Monday - Saturday: 9:00 AM - 6:00 PM</li>
-            <li>Sunday: Closed</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+<!-- Manufacturing Products -->
+<div class="product-category" id="manufacturing">
+<h2><i class="fas fa-industry"></i> Supplying &amp; Manufacturing</h2>
+<p class="category-note">Pharmaceutical APIs, KSMs and intermediates we trade and manufacture.</p>
+<div class="compound-grid" id="grid-manufacturing">
+<p class="loading-note">Loading compounds&hellip;</p>
+</div>
+</div>
 
-  <script src="main.js"></script>
+<!-- Impurity Reference Standards -->
+<div class="product-category" id="impurity-standards">
+<h2><i class="fas fa-vial-circle-check"></i> Impurity Reference Standards</h2>
+<p class="category-note">Characterized process- and degradation-related impurity / related-substance reference standards for peptide APIs, supplied for analytical method development, qualification and stability studies. Select a parent peptide to view its available impurities.</p>
+<div class="imp-tabs">
+<div class="tab-buttons" id="impTabButtons">
+<p class="loading-note">Loading impurities&hellip;</p>
+</div>
+<div class="tab-content" id="impTabContent"></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<footer class="container">
+<div class="footer-bottom">
+<p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script src="js/main.js"></script>
+<script type="module">
+import { db } from './js/firebase-config.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const PARENT_LABELS = {
+  tirzepatide: 'Tirzepatide',
+  semaglutide: 'Semaglutide',
+  glucagon: 'Glucagon',
+  teriparatide: 'Teriparatide',
+  icatibant: 'Icatibant',
+  octreotide: 'Octreotide',
+  liraglutide: 'Liraglutide',
+  leuprolide: 'Leuprolide',
+  teduglutide: 'Teduglutide',
+};
+
+function labelForParent(slug) {
+  if (PARENT_LABELS[slug]) return PARENT_LABELS[slug];
+  return slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function esc(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
+
+function compoundCardHTML(c) {
+  const img = c.image
+    ? `<img src="${esc(c.image)}" alt="${esc(c.name)} structure" loading="lazy">`
+    : `<div class="no-structure-note"><i class="fas fa-dna"></i><span>No structure image<br>available</span></div>`;
+
+  const iupac = c.iupacName ? `<p class="compound-iupac">${esc(c.iupacName)}</p>` : '';
+  const syn = c.synonyms ? `<p class="compound-syn">${esc(c.synonyms)}</p>` : '';
+  const desc = c.description ? `<p class="compound-desc">${esc(c.description)}</p>` : '';
+
+  const smilesBlock = c.smiles
+    ? `<span class="compound-code-label">Canonical SMILES</span><div class="compound-code">${esc(c.smiles)}</div>`
+    : '';
+  const inchiBlock = (c.inchikey && c.inchikey !== '—')
+    ? `<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span><div class="compound-code">${esc(c.inchikey)}</div>`
+    : '';
+  const link = c.pubchemUrl
+    ? `<div class="compound-link"><a href="${esc(c.pubchemUrl)}" target="_blank" rel="noopener">View on PubChem &rarr;</a></div>`
+    : '';
+
+  const searchBlob = [c.name, c.cas, c.synonyms, c.iupacName].filter(Boolean).join(' ').toLowerCase();
+
+  return `<div class="compound-card" data-search="${esc(searchBlob)}">
+<div class="compound-image">${img}</div>
+<div class="compound-body">
+<h3>${esc(c.name)}</h3>
+${iupac}
+${syn}
+${desc}
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">${esc(c.cas || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">${esc(c.mf || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">${esc(c.mw || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">${esc(c.grade || '—')}</div></div>
+</div>
+${smilesBlock}
+${inchiBlock}
+${link}
+</div>
+</div>`;
+}
+
+async function loadCompounds() {
+  const snap = await getDocs(collection(db, 'compounds'));
+  const byCategory = { 'peptide-apis': [], 'other-apis': [], 'manufacturing': [] };
+  snap.forEach(docSnap => {
+    const c = docSnap.data();
+    if (byCategory[c.category]) byCategory[c.category].push(c);
+  });
+  Object.keys(byCategory).forEach(cat => {
+    byCategory[cat].sort((a, b) => (a.order || 0) - (b.order || 0));
+    const grid = document.getElementById(`grid-${cat}`);
+    if (!grid) return;
+    grid.innerHTML = byCategory[cat].length
+      ? byCategory[cat].map(compoundCardHTML).join('')
+      : '<p class="loading-note">No compounds in this category yet.</p>';
+  });
+}
+
+function impurityRowHTML(i) {
+  return `<tr data-search="${esc(i.name.toLowerCase())}"><td>${esc(i.name)}</td><td>${esc(i.mf || '—')}</td><td>${esc(i.mw || '—')}</td></tr>`;
+}
+
+async function loadImpurities() {
+  const snap = await getDocs(collection(db, 'impurities'));
+  const byParent = {};
+  snap.forEach(docSnap => {
+    const i = docSnap.data();
+    if (!byParent[i.parent]) byParent[i.parent] = [];
+    byParent[i.parent].push(i);
+  });
+
+  const parents = Object.keys(byParent).sort();
+  const btnContainer = document.getElementById('impTabButtons');
+  const contentContainer = document.getElementById('impTabContent');
+
+  if (!parents.length) {
+    btnContainer.innerHTML = '<p class="loading-note">No impurity data yet.</p>';
+    return;
+  }
+
+  btnContainer.innerHTML = parents.map((p, idx) => {
+    byParent[p].sort((a, b) => (a.order || 0) - (b.order || 0));
+    const active = idx === 0 ? ' active' : '';
+    return `<button class="tab-btn${active}" data-imp-tab="imp-${esc(p)}">${esc(labelForParent(p))} <span class="imp-count">(${byParent[p].length})</span></button>`;
+  }).join('');
+
+  contentContainer.innerHTML = parents.map((p, idx) => {
+    const active = idx === 0 ? ' active' : '';
+    return `<div class="tab-pane${active}" id="imp-${esc(p)}">
+<div class="impurity-table-wrap">
+<table class="impurity-table">
+<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
+<tbody>${byParent[p].map(impurityRowHTML).join('')}</tbody>
+</table>
+</div>
+</div>`;
+  }).join('');
+
+  btnContainer.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-imp-tab');
+      btnContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      contentContainer.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+}
+
+function setupSearch() {
+  const input = document.getElementById('compoundSearch');
+  const clearBtn = document.getElementById('searchClear');
+  const status = document.getElementById('searchStatus');
+
+  function runSearch() {
+    const term = input.value.trim().toLowerCase();
+    clearBtn.style.display = term ? 'block' : 'none';
+
+    if (!term) {
+      document.querySelectorAll('.compound-card').forEach(el => el.style.display = '');
+      document.querySelectorAll('.impurity-table tr[data-search]').forEach(el => el.style.display = '');
+      document.querySelectorAll('#peptide-apis, #other-apis, #manufacturing').forEach(el => el.classList.remove('is-hidden-by-search'));
+      status.textContent = '';
+      return;
+    }
+
+    let totalMatches = 0;
+    ['peptide-apis', 'other-apis', 'manufacturing'].forEach(cat => {
+      const catEl = document.getElementById(cat);
+      let matches = 0;
+      catEl.querySelectorAll('.compound-card').forEach(card => {
+        const hit = card.getAttribute('data-search').includes(term);
+        card.style.display = hit ? '' : 'none';
+        if (hit) { matches++; totalMatches++; }
+      });
+      catEl.classList.toggle('is-hidden-by-search', matches === 0);
+    });
+
+    document.querySelectorAll('.impurity-table tr[data-search]').forEach(row => {
+      const hit = row.getAttribute('data-search').includes(term);
+      row.style.display = hit ? '' : 'none';
+      if (hit) totalMatches++;
+    });
+
+    status.textContent = totalMatches
+      ? `${totalMatches} match${totalMatches === 1 ? '' : 'es'} found`
+      : 'No matches found. Try a different name, CAS number or synonym.';
+  }
+
+  input.addEventListener('input', runSearch);
+  clearBtn.addEventListener('click', () => { input.value = ''; runSearch(); input.focus(); });
+}
+
+Promise.all([loadCompounds(), loadImpurities()]).then(setupSearch).catch(err => {
+  console.error('Failed to load product data from Firestore:', err);
+  document.querySelectorAll('.loading-note').forEach(el => {
+    el.textContent = 'Could not load product data right now. Please refresh, or contact us if this continues.';
+  });
+});
+</script>
 </body>
 </html>
