@@ -8,6 +8,20 @@ navMenu.classList.toggle('active');
 });
 }
 
+// Products Dropdown (tap-to-open on mobile, hover on desktop)
+document.querySelectorAll('.nav-dropdown > a').forEach(link => {
+link.addEventListener('click', (e) => {
+if (window.innerWidth <= 768) {
+const parent = link.parentElement;
+if (!parent.classList.contains('open')) {
+e.preventDefault();
+document.querySelectorAll('.nav-dropdown.open').forEach(el => el.classList.remove('open'));
+parent.classList.add('open');
+}
+}
+});
+});
+
 // Tab Functionality
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabPanes = document.querySelectorAll('.tab-pane');
