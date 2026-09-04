@@ -21,6 +21,63 @@ font-size: 3rem;
 margin-bottom: 1rem;
 }
 
+.search-section {
+background: var(--bg-light);
+padding: 2rem 0;
+border-bottom: 1px solid #e5e5e5;
+}
+
+.search-box {
+max-width: 560px;
+margin: 0 auto;
+position: relative;
+}
+
+.search-box i {
+position: absolute;
+left: 1.2rem;
+top: 50%;
+transform: translateY(-50%);
+color: var(--text-light);
+}
+
+.search-box input {
+width: 100%;
+padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+border: 2px solid #ddd;
+border-radius: 50px;
+font-family: inherit;
+font-size: 0.98rem;
+transition: var(--transition);
+background: var(--white);
+}
+
+.search-box input:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.12);
+}
+
+.search-clear {
+position: absolute;
+right: 1rem;
+top: 50%;
+transform: translateY(-50%);
+background: none;
+border: none;
+color: var(--text-light);
+cursor: pointer;
+font-size: 1rem;
+display: none;
+}
+
+.search-status {
+text-align: center;
+color: var(--text-light);
+font-size: 0.88rem;
+margin-top: 0.75rem;
+}
+
 .products-section {
 padding: 4rem 0;
 }
@@ -28,6 +85,10 @@ padding: 4rem 0;
 .product-category {
 margin-bottom: 4rem;
 scroll-margin-top: 90px;
+}
+
+.product-category.is-hidden-by-search {
+display: none;
 }
 
 .product-category h2 {
@@ -57,6 +118,19 @@ font-size: 0.82rem;
 .spec-value {
 color: var(--text-dark);
 font-weight: 500;
+}
+
+.compound-desc {
+color: var(--text-light);
+font-size: 0.92rem;
+margin-bottom: 1rem;
+}
+
+.compound-iupac {
+color: var(--text-light);
+font-size: 0.78rem;
+font-family: 'Courier New', Courier, monospace;
+margin-bottom: 0.5rem;
 }
 
 .no-structure-note {
@@ -127,6 +201,16 @@ background: var(--bg-light);
 .impurity-table tbody tr:hover {
 background: #e0f2f1;
 }
+
+.impurity-table tr.is-hidden-by-search {
+display: none;
+}
+
+.loading-note {
+text-align: center;
+color: var(--text-light);
+padding: 2rem 0;
+}
 </style>
 </head>
 <body>
@@ -166,6 +250,19 @@ background: #e0f2f1;
 </div>
 </section>
 
+<section class="search-section">
+<div class="container">
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" id="compoundSearch" placeholder="Search by compound name, CAS number, or synonym...">
+<button type="button" class="search-clear" id="searchClear" aria-label="Clear search">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<p class="search-status" id="searchStatus"></p>
+</div>
+</section>
+
 <section class="products-section">
 <div class="container">
 
@@ -173,359 +270,8 @@ background: #e0f2f1;
 <div class="product-category" id="peptide-apis">
 <h2><i class="fas fa-dna"></i> Peptide APIs (In Stock)</h2>
 <p class="category-note">High-purity peptide APIs, ready for supply with full documentation.</p>
-<div class="compound-grid">
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=71511839&t=l" alt="Etelcalcetide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Etelcalcetide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Calcimimetic peptide API used to manage secondary hyperparathyroidism.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">1262780-97-1</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C38H73N21O10S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1048.3 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">ANIAZGVDEUQPRI-ZJQCGQFWSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/71511839" target="_blank" rel="noopener">View on PubChem (CID 71511839) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=16133850&t=l" alt="Teriparatide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Teriparatide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Recombinant PTH(1-34) fragment peptide used in osteoporosis therapy.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">52232-67-4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C181H291N55O51S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4118 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">OGBMKVWORPGQRR-UMXFMPSGSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/16133850" target="_blank" rel="noopener">View on PubChem (CID 16133850) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=166567236&t=l" alt="Tirzepatide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Tirzepatide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Dual GIP/GLP-1 receptor agonist peptide for type 2 diabetes and weight management.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">2023788-19-2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C225H348N48O68</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4813 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">BTSOGEDATSQOAF-MCNPHUAVSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/166567236" target="_blank" rel="noopener">View on PubChem (CID 166567236) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=76943386&t=l" alt="Abaloparatide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Abaloparatide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Synthetic PTHrP analog peptide indicated for osteoporosis.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">247062-33-5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C174H300N56O49</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">3961 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">BVISQZFBLRSESR-XSCWXTNMSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/76943386" target="_blank" rel="noopener">View on PubChem (CID 76943386) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=56843331&t=l" alt="Semaglutide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Semaglutide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">GLP-1 receptor agonist peptide used in diabetes and weight-management therapies.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">910463-68-2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C187H291N45O59</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4114 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">DLSWIYLPEUIQAV-CCUURXOWSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/56843331" target="_blank" rel="noopener">View on PubChem (CID 56843331) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=62707662&t=l" alt="TB-500 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>TB-500</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Synthetic fragment of Thymosin Beta-4 studied in tissue-repair and regenerative research.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">885340-08-9</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C38H68N10O14</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">889.0 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">ADKDNDYYIZUVCZ-ZQNQAVPYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/62707662" target="_blank" rel="noopener">View on PubChem (CID 62707662) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9941957&t=l" alt="BPC-157 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>BPC-157</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Pentadecapeptide derived from gastric protective protein BPC, widely studied for tissue repair.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">137525-51-0</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C62H98N16O22</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1419.5 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">HEEWEZGQMLZMFE-RKGINYAYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/9941957" target="_blank" rel="noopener">View on PubChem (CID 9941957) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=16132413&t=l" alt="Sermorelin structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Sermorelin</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">GHRH(1-29) analog peptide that stimulates endogenous growth hormone release.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">86168-78-7</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C149H246N44O42S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">3357.9 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">WGWPRVFKDLAUQJ-MITYVQBRSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/16132413" target="_blank" rel="noopener">View on PubChem (CID 16132413) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=71300630&t=l" alt="AOD-9604 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>AOD-9604</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Modified C-terminal hGH fragment studied for its lipolytic activity.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">221231-10-3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C78H123N23O23S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1815.1 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">GVIYUKXRXPXMQM-BPXGDYAESA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/71300630" target="_blank" rel="noopener">View on PubChem (CID 71300630) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=172966178&t=l" alt="HGH Fragment 176-191 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>HGH Fragment 176-191</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">C-terminal fragment of human growth hormone studied in fat-metabolism research.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">66004-58-8</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C71H118N22O23S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1712.0 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">WMSTYKWIHVMDHB-URDRVRQQSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/172966178" target="_blank" rel="noopener">View on PubChem (CID 172966178) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><div class="no-structure-note"><i class="fas fa-dna"></i><span>Large protein biologic<br>(no small-molecule record)</span></div></div>
-<div class="compound-body">
-<h3>Human Growth Hormone (Somatropin)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Recombinant 191-residue human growth hormone protein, supplied as a reference/research-grade biologic. As a large protein it has no small-molecule PubChem structure record.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">9002-72-6</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">—</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">22,125 (protein)</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">—</div>
-
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=91971820&t=l" alt="CJC-1295 (with DAC) structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>CJC-1295 (with DAC)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Long-acting GHRH analog conjugated to a Drug Affinity Complex (DAC) for extended plasma half-life.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">446262-90-4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C165H269N47O46</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">3647.2 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">ZUQGTWKGESAQCD-ZGFIGYLBSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/91971820" target="_blank" rel="noopener">View on PubChem (CID 91971820) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=56841945&t=l" alt="CJC-1295 (without DAC) structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>CJC-1295 (without DAC)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Modified GRF(1-29) analog (Mod GRF 1-29) that stimulates growth hormone release without the DAC extension.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">446036-97-1</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C152H252N44O42</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">3367.9 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">XOZMWINMZMMOBR-HRDSVTNWSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/56841945" target="_blank" rel="noopener">View on PubChem (CID 56841945) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9831659&t=l" alt="Ipamorelin structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Ipamorelin</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Selective growth-hormone secretagogue pentapeptide with high ghrelin-receptor selectivity.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">170851-70-4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C38H49N9O5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">711.9 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">NEHWBYHLYZGBNO-BVEPWEIPSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/9831659" target="_blank" rel="noopener">View on PubChem (CID 9831659) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9941379&t=l" alt="PT-141 (Bremelanotide) structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>PT-141 (Bremelanotide)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Melanocortin receptor agonist peptide derived from alpha-MSH.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">189691-06-3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C50H68N14O10</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1025.2 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">FFHBJDQSGDNCIV-MFVUMRCOSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/9941379" target="_blank" rel="noopener">View on PubChem (CID 9941379) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=11764719&t=l" alt="SS-31 (Elamipretide) structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>SS-31 (Elamipretide)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Mitochondria-targeted tetrapeptide studied for antioxidant and cardiolipin-stabilizing activity.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">736992-21-5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C32H49N9O5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">639.8 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">SFVLTCAESLKEHH-WKAQUBQDSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/11764719" target="_blank" rel="noopener">View on PubChem (CID 11764719) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=171397054&t=l" alt="Cagrilintide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Cagrilintide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Long-acting amylin analog peptide studied in combination with GLP-1 agonists for weight management.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">1415456-99-3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C194H312N54O59S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4409 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">LDERDVMBIYGIOI-IZVMHKDJSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/171397054" target="_blank" rel="noopener">View on PubChem (CID 171397054) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5892&t=l" alt="NAD+ (Nicotinamide Adenine Dinucleotide) structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>NAD+ (Nicotinamide Adenine Dinucleotide)</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Essential redox coenzyme involved in cellular energy metabolism and sirtuin signaling.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">53-84-9</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C21H27N7O14P2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">663.4 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">BAWFJGJZGIEFAR-NNYOXOHSSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5892" target="_blank" rel="noopener">View on PubChem (CID 5892) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=25240297&t=l" alt="Kisspeptin-10 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Kisspeptin-10</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">C-terminal decapeptide of kisspeptin that activates KISS1R and regulates GnRH secretion.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">374675-21-5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C63H83N17O14</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">1302.4 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">RITKWYDZSSQNJI-INXYWQKQSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/25240297" target="_blank" rel="noopener">View on PubChem (CID 25240297) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=171390338&t=l" alt="Retatrutide structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Retatrutide</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Triple GIP/GLP-1/glucagon receptor agonist peptide studied for metabolic and weight-management indications.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">2381089-83-2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C221H342N46O68</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">4731 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">MLOLQJNKXBNWFW-SAGGEDDASA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/171390338" target="_blank" rel="noopener">View on PubChem (CID 171390338) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=125672&t=l" alt="KPV structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>KPV</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Anti-inflammatory tripeptide fragment of alpha-MSH(11-13) studied for NF-κB modulating activity.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">67727-97-3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C16H30N4O4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">342.43 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">YSPZCHGIWAQVKQ-AVGNSLFASA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/125672" target="_blank" rel="noopener">View on PubChem (CID 125672) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=16137828&t=l" alt="Tesamorelin structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Tesamorelin</h3>
-<p style="color:var(--text-light);font-size:0.92rem;margin-bottom:1rem;">Stabilized GHRH(1-44) analog peptide studied for HIV-associated lipodystrophy.</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">218949-48-5</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C221H366N72O67S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">5136 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Peptide API</div></div>
-</div>
-<span class="compound-code-label">InChIKey</span>
-<div class="compound-code">QBEPNUQJQWDYKU-BMGKTWPMSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/16137828" target="_blank" rel="noopener">View on PubChem (CID 16137828) &rarr;</a></div>
-</div>
-</div>
+<div class="compound-grid" id="grid-peptide-apis">
+<p class="loading-note">Loading compounds&hellip;</p>
 </div>
 </div>
 
@@ -533,25 +279,8 @@ background: #e0f2f1;
 <div class="product-category" id="other-apis">
 <h2><i class="fas fa-pills"></i> Other APIs</h2>
 <p class="category-note">Small-molecule API available in stock.</p>
-<div class="compound-grid">
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135401907&t=l" alt="Allopurinol structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Allopurinol</h3>
-<p class="compound-syn">1H-Pyrazolo[3,4-d]pyrimidin-4-ol, Zyloric</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">315-30-0</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C5H4N4O</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">136.11 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP / BP / EP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">C1=NNC2=C1C(=O)NC=N2</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">OFCNXPDARWKPPY-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/135401907" target="_blank" rel="noopener">View on PubChem (CID 135401907) &rarr;</a></div>
-</div>
-</div>
+<div class="compound-grid" id="grid-other-apis">
+<p class="loading-note">Loading compounds&hellip;</p>
 </div>
 </div>
 
@@ -559,205 +288,8 @@ background: #e0f2f1;
 <div class="product-category" id="manufacturing">
 <h2><i class="fas fa-industry"></i> Supplying &amp; Manufacturing</h2>
 <p class="category-note">Pharmaceutical APIs, KSMs and intermediates we trade and manufacture.</p>
-<div class="compound-grid">
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=4594&t=l" alt="Omeprazole USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Omeprazole USP</h3>
-<p class="compound-syn">Losec, Antra</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">73590-58-6</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C17H19N3O3S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">345.4 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">SUBDBMMJDZJVOS-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/4594" target="_blank" rel="noopener">View on PubChem (CID 4594) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=60496&t=l" alt="Amlodipine Besylate USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Amlodipine Besylate USP</h3>
-<p class="compound-syn">Amlodipine besilate, Amlodipine benzenesulfonate</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">111470-99-6</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C26H31ClN2O8S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">567.1 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CCOC(=O)C1=C(NC(=C(C1C2=CC=CC=C2Cl)C(=O)OC)C)COCCN.C1=CC=C(C=C1)S(=O)(=O)O</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">ZPBWCRDSRKPIDG-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/60496" target="_blank" rel="noopener">View on PubChem (CID 60496) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5486971&t=l" alt="Pregabalin USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Pregabalin USP</h3>
-<p class="compound-syn">Lyrica, 3-isobutyl GABA</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">148553-50-8</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C8H17NO2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">159.23 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CC(C)CC(CC(=O)O)CN</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">AYXYPKUFHZROOJ-ZETCQYMHSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5486971" target="_blank" rel="noopener">View on PubChem (CID 5486971) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5284583&t=l" alt="Levetiracetam USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Levetiracetam USP</h3>
-<p class="compound-syn">Keppra, (2S)-2-(2-oxopyrrolidin-1-yl)butanamide</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">102767-28-2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C8H14N2O2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">170.21 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CCC(C(=O)N)N1CCCC1=O</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">HPHUVLMMVZITSG-LURJTMIESA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5284583" target="_blank" rel="noopener">View on PubChem (CID 5284583) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5464025&t=l" alt="Dextromethorphan Hydrobromide USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Dextromethorphan Hydrobromide USP</h3>
-<p class="compound-syn">Delsym, Antussan</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">125-69-9</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C18H26BrNO</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">352.3 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CN1CCC23CCCCC2C1CC4=C3C=C(C=C4)OC.Br</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">MISZALMBODQYFT-URVXVIKDSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/5464025" target="_blank" rel="noopener">View on PubChem (CID 5464025) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=21121303&t=l" alt="Esomeprazole Magnesium Trihydrate USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Esomeprazole Magnesium Trihydrate USP</h3>
-<p class="compound-syn">Esomeprazole magnesium trihydrate, Nexium</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">217087-09-7</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C34H42MgN6O9S2</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">767.2 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C([N-]2)C=CC(=C3)OC.CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C([N-]2)C=CC(=C3)OC.O.O.O.[Mg+2]</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">VEVZQDGATGBLIC-OXLUMUBXSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/21121303" target="_blank" rel="noopener">View on PubChem (CID 21121303) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9875401&t=l" alt="Rivaroxaban structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Rivaroxaban</h3>
-<p class="compound-syn">Xarelto, BAY 59-7939</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">366789-02-8</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C19H18ClN3O5S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">435.9 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">—</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">C1COCC(=O)N1C2=CC=C(C=C2)N3CC(OC3=O)CNC(=O)C4=CC=C(S4)Cl</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">KGFYHTZWPPHNLQ-AWEZNQCLSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/9875401" target="_blank" rel="noopener">View on PubChem (CID 9875401) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=71412&t=l" alt="Labetalol Hydrochloride USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Labetalol Hydrochloride USP</h3>
-<p class="compound-syn">Labetalol HCl, Labrocol</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">32780-64-6</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C19H25ClN2O3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">364.9 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CC(CCC1=CC=CC=C1)NCC(C2=CC(=C(C=C2)O)C(=O)N)O.Cl</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">WQVZLXWQESQGIF-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/71412" target="_blank" rel="noopener">View on PubChem (CID 71412) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=22352226&t=l" alt="AXBN20 structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>AXBN20</h3>
-<p class="compound-syn">5,6-Dihydro-3-(4-morpholinyl)-1-[4-(2-oxo-1-piperidinyl)phenyl]-2(1H)-pyridinone</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">545445-44-1</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C20H25N3O3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">355.4 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">Reference standard / intermediate</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">C1CCN(C(=O)C1)C2=CC=C(C=C2)N3CCC=C(C3=O)N4CCOCC4</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">SCVWQFDPLBFZAP-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/22352226" target="_blank" rel="noopener">View on PubChem (CID 22352226) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=12947&t=l" alt="Hydroxychloroquine Sulfate USP structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Hydroxychloroquine Sulfate USP</h3>
-<p class="compound-syn">Hydroxychloroquine sulphate, Ercoquin</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">747-36-4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C18H28ClN3O5S</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">434.0 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">USP</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">CCN(CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl)CCO.OS(=O)(=O)O</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">JCBIVZZPXRZKTI-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/12947" target="_blank" rel="noopener">View on PubChem (CID 12947) &rarr;</a></div>
-</div>
-</div>
-<div class="compound-card">
-<div class="compound-image"><img src="https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=10182969&t=l" alt="Apixaban structure" loading="lazy"></div>
-<div class="compound-body">
-<h3>Apixaban</h3>
-<p class="compound-syn">Eliquis, BMS-562247-01</p>
-<div class="compound-specs">
-<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">503612-47-3</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">C25H25N5O4</div></div>
-<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">459.5 g/mol</div></div>
-<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">—</div></div>
-</div>
-<span class="compound-code-label">Canonical SMILES</span>
-<div class="compound-code">COC1=CC=C(C=C1)N2C3=C(CCN(C3=O)C4=CC=C(C=C4)N5CCCCC5=O)C(=N2)C(=O)N</div>
-<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span>
-<div class="compound-code">QNZCBYKSOIHPEH-UHFFFAOYSA-N</div>
-<div class="compound-link"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/10182969" target="_blank" rel="noopener">View on PubChem (CID 10182969) &rarr;</a></div>
-</div>
-</div>
+<div class="compound-grid" id="grid-manufacturing">
+<p class="loading-note">Loading compounds&hellip;</p>
 </div>
 </div>
 
@@ -766,117 +298,17 @@ background: #e0f2f1;
 <h2><i class="fas fa-vial-circle-check"></i> Impurity Reference Standards</h2>
 <p class="category-note">Characterized process- and degradation-related impurity / related-substance reference standards for peptide APIs, supplied for analytical method development, qualification and stability studies. Select a parent peptide to view its available impurities.</p>
 <div class="imp-tabs">
-<div class="tab-buttons">
-<button class="tab-btn active" data-tab="imp-tirzepatide">Tirzepatide <span class="imp-count">(21)</span></button>
-<button class="tab-btn" data-tab="imp-semaglutide">Semaglutide <span class="imp-count">(10)</span></button>
-<button class="tab-btn" data-tab="imp-glucagon">Glucagon <span class="imp-count">(10)</span></button>
-<button class="tab-btn" data-tab="imp-teriparatide">Teriparatide <span class="imp-count">(33)</span></button>
-<button class="tab-btn" data-tab="imp-icatibant">Icatibant <span class="imp-count">(14)</span></button>
-<button class="tab-btn" data-tab="imp-octreotide">Octreotide <span class="imp-count">(11)</span></button>
-<button class="tab-btn" data-tab="imp-liraglutide">Liraglutide <span class="imp-count">(8)</span></button>
-<button class="tab-btn" data-tab="imp-leuprolide">Leuprolide <span class="imp-count">(12)</span></button>
-<button class="tab-btn" data-tab="imp-teduglutide">Teduglutide <span class="imp-count">(31)</span></button>
+<div class="tab-buttons" id="impTabButtons">
+<p class="loading-note">Loading impurities&hellip;</p>
 </div>
-<div class="tab-content">
-<div class="tab-pane active" id="imp-tirzepatide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>Glu19-Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Endo Tyr10-Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Glu24-Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Endo Ala35-Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Endo Thr5-Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>7-39 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Des-Aib13 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Des-Ile17 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>Des-Aib2 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Leu26 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Leu14 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Gln24 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Gln19 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Ser11 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Ser8 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>g-D-Glu Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>5-39 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>4-39 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>3-39 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Tyr1 Tirzepatide</td><td>—</td><td>—</td></tr><tr><td>D-Ile12 Tirzepatide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-semaglutide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>Glu17 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Endo-Gly4 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Glu3 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Thr7 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Thr5 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-His1-Aib2 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Aib2 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>D-His1 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Gly4 Semaglutide</td><td>—</td><td>—</td></tr><tr><td>Des-His1 Semaglutide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-glucagon">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>(Asp28)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(D-His1)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(Glu20)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(Glu24)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(Des-Gly4)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(D-Ser8)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>Met(O27)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(Des-Thr5)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(Glu3)-Glucagon</td><td>—</td><td>—</td></tr><tr><td>(D-Ser2)-Glucagon</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-teriparatide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>Asp33-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Des-Ser1-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Des-Ser3-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Ser3-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-His9-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-His14-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>+Asn33-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>17-34-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Ac-Gln(29-34)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Ac-Gln(6-34)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Endo-Arg20-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>1-16-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Glu6-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Endo-Arg25-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Glu6-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Glu29-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Met+O(8)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Met+O(18)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Met+O(8,18)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>(1-30)-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>+Gln6,29-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>+Arg20,25-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>β-Ala-Trp23-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>+Gly12-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Trp23-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Val2,21,31-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>β-Ala-Val2,21,31-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Asp30-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>+Trp23-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>D-Glu4,19,22-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>β-Ala-Glu4,19,22-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Ac-Ser1-Teriparatide</td><td>—</td><td>—</td></tr><tr><td>Asp16-Teriparatide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-icatibant">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>[D-Pro3]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>D-[Thi6]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>Acetyl[8-10]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>[L-Tic8]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>N-Acetyl-Icatibant</td><td>—</td><td>—</td></tr><tr><td>D-Arg2-Icatibant</td><td>—</td><td>—</td></tr><tr><td>[+Gly]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>Des-D-[Arg1]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>D-[Arg10]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>Des-[Arg2]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>Des-[Gly5]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>[D-Ser7]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>[7-10]-Icatibant</td><td>—</td><td>—</td></tr><tr><td>[1-6]-Icatibant</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-octreotide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>(+D)-Trp-Octreotide</td><td>—</td><td>—</td></tr><tr><td>β-Ala-D-Trp-Octreotide</td><td>—</td><td>—</td></tr><tr><td>β-Ala-Des-Lys-Octreotide</td><td>—</td><td>—</td></tr><tr><td>D-Allo-Thr6-Octreotide</td><td>—</td><td>—</td></tr><tr><td>D-Cys2-Octreotide</td><td>—</td><td>—</td></tr><tr><td>D-Cys7-Octreotide</td><td>—</td><td>—</td></tr><tr><td>D-Lys5-Octreotide</td><td>—</td><td>—</td></tr><tr><td>Acetyl-Phe1-Octreotide</td><td>—</td><td>—</td></tr><tr><td>Acetyl-Lys5-Octreotide</td><td>—</td><td>—</td></tr><tr><td>D-Thr6-Octreotide</td><td>—</td><td>—</td></tr><tr><td>Des-Throl-Octreotide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-liraglutide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>D-His1-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>Endo-Ala18-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>D-His1-Endo-Ala-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>5-31-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>D-Asp8-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>Endo-Gly31-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>D-Thr5-Liraglutide</td><td>—</td><td>—</td></tr><tr><td>Des-Thr5-Liraglutide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-leuprolide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>D-Ser-D-His-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>Des-1,2,3-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-Leu-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>Tripeptide-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>Des-P-Glu-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>(O-Acetyl-L-Ser)-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>L-Leu6-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-Ser4-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-His2-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-Pyr-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-Trp-Leuprolide</td><td>—</td><td>—</td></tr><tr><td>D-Tyr-Leuprolide</td><td>—</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="tab-pane" id="imp-teduglutide">
-<div class="impurity-table-wrap">
-<table class="impurity-table">
-<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
-<tbody>
-<tr><td>Asu3-Teduglutide</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Des-Gly2-Teduglutide</td><td>C162H249N43O54S</td><td>3695.1 g/mol</td></tr><tr><td>Fragment-[11-33]-Teduglutide</td><td>C121H194N32O37</td><td>2689.1 g/mol</td></tr><tr><td>Fragment-[12-33]-Teduglutide</td><td>C117H188N30O35</td><td>2575.0 g/mol</td></tr><tr><td>Fragment-[1-29]-Teduglutide</td><td>C144H217N39O48S</td><td>3294.6 g/mol</td></tr><tr><td>Fragment-[1-30]-Teduglutide</td><td>C150H229N41O49S</td><td>3422.8 g/mol</td></tr><tr><td>Fragment-[13-33]-Teduglutide</td><td>C113H181N29O33</td><td>2473.9 g/mol</td></tr><tr><td>Fragment-[17-33]-Teduglutide</td><td>C93H148N24O26</td><td>2018.3 g/mol</td></tr><tr><td>Fragment-[3-30]-Teduglutide</td><td>C142H219N37O47S</td><td>3228.6 g/mol</td></tr><tr><td>Iso-Asp3-Teduglutide</td><td>C164H252N44O55S</td><td>3752.1 g/mol</td></tr><tr><td>N-Nitroso Teduglutide</td><td>C164H251N45O56S</td><td>3781.1 g/mol</td></tr><tr><td>Teduglutide [3-33] Impurity</td><td>C152H236N39O50S</td><td>3441.8 g/mol</td></tr><tr><td>Teduglutide Acetone Adduct Impurity</td><td>C166H253N43O57S</td><td>3795.2 g/mol</td></tr><tr><td>Teduglutide Asp15 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Asp21 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Asp3 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Asp33 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Asp8 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Des-His1 Impurity</td><td>C162H249N43O54S</td><td>3695.1 g/mol</td></tr><tr><td>Teduglutide D-His1 Impurity</td><td>C164H252N44O55S</td><td>3752.1 g/mol</td></tr><tr><td>Teduglutide Di-Gly2 Impurity</td><td>C166H255N45O56S</td><td>3809.2 g/mol</td></tr><tr><td>Teduglutide Di-Gly4 Impurity</td><td>C166H255N45O56S</td><td>3809.2 g/mol</td></tr><tr><td>Teduglutide Glu9 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Impurity 1</td><td>C164H250N44O54S</td><td>3734.1 g/mol</td></tr><tr><td>Teduglutide Met (O)10 Impurity</td><td>C164H252N44O56S</td><td>3768.1 g/mol</td></tr><tr><td>Teduglutide Ser5 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Ser7 (OtBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Thr12 (tBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Thr29 (tBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide Thr32 (tBu) Impurity</td><td>C168H260N44O55S</td><td>3808.2 g/mol</td></tr><tr><td>Teduglutide-D8 (Leu-D3 + Phe-D5)</td><td>C164H244D8N44O55S</td><td>3760.2 g/mol</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+<div class="tab-content" id="impTabContent"></div>
 </div>
 </div>
 
 </div>
 </section>
 
-<footer class="footer">
-<div class="container">
+<footer class="container">
 <div class="footer-bottom">
 <p>&copy; 2026 Trinadh Industries. All rights reserved.</p>
 </div>
@@ -884,5 +316,192 @@ background: #e0f2f1;
 </footer>
 
 <script src="js/main.js"></script>
+<script type="module">
+import { db } from './js/firebase-config.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const PARENT_LABELS = {
+  tirzepatide: 'Tirzepatide',
+  semaglutide: 'Semaglutide',
+  glucagon: 'Glucagon',
+  teriparatide: 'Teriparatide',
+  icatibant: 'Icatibant',
+  octreotide: 'Octreotide',
+  liraglutide: 'Liraglutide',
+  leuprolide: 'Leuprolide',
+  teduglutide: 'Teduglutide',
+};
+
+function labelForParent(slug) {
+  if (PARENT_LABELS[slug]) return PARENT_LABELS[slug];
+  return slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function esc(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
+
+function compoundCardHTML(c) {
+  const img = c.image
+    ? `<img src="${esc(c.image)}" alt="${esc(c.name)} structure" loading="lazy">`
+    : `<div class="no-structure-note"><i class="fas fa-dna"></i><span>No structure image<br>available</span></div>`;
+
+  const iupac = c.iupacName ? `<p class="compound-iupac">${esc(c.iupacName)}</p>` : '';
+  const syn = c.synonyms ? `<p class="compound-syn">${esc(c.synonyms)}</p>` : '';
+  const desc = c.description ? `<p class="compound-desc">${esc(c.description)}</p>` : '';
+
+  const smilesBlock = c.smiles
+    ? `<span class="compound-code-label">Canonical SMILES</span><div class="compound-code">${esc(c.smiles)}</div>`
+    : '';
+  const inchiBlock = (c.inchikey && c.inchikey !== '—')
+    ? `<span class="compound-code-label" style="margin-top:0.6rem;">InChIKey</span><div class="compound-code">${esc(c.inchikey)}</div>`
+    : '';
+  const link = c.pubchemUrl
+    ? `<div class="compound-link"><a href="${esc(c.pubchemUrl)}" target="_blank" rel="noopener">View on PubChem &rarr;</a></div>`
+    : '';
+
+  const searchBlob = [c.name, c.cas, c.synonyms, c.iupacName].filter(Boolean).join(' ').toLowerCase();
+
+  return `<div class="compound-card" data-search="${esc(searchBlob)}">
+<div class="compound-image">${img}</div>
+<div class="compound-body">
+<h3>${esc(c.name)}</h3>
+${iupac}
+${syn}
+${desc}
+<div class="compound-specs">
+<div class="spec-item"><div class="spec-label">CAS Number</div><div class="spec-value">${esc(c.cas || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Formula</div><div class="spec-value">${esc(c.mf || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Molecular Weight</div><div class="spec-value">${esc(c.mw || '—')}</div></div>
+<div class="spec-item"><div class="spec-label">Grade</div><div class="spec-value">${esc(c.grade || '—')}</div></div>
+</div>
+${smilesBlock}
+${inchiBlock}
+${link}
+</div>
+</div>`;
+}
+
+async function loadCompounds() {
+  const snap = await getDocs(collection(db, 'compounds'));
+  const byCategory = { 'peptide-apis': [], 'other-apis': [], 'manufacturing': [] };
+  snap.forEach(docSnap => {
+    const c = docSnap.data();
+    if (byCategory[c.category]) byCategory[c.category].push(c);
+  });
+  Object.keys(byCategory).forEach(cat => {
+    byCategory[cat].sort((a, b) => (a.order || 0) - (b.order || 0));
+    const grid = document.getElementById(`grid-${cat}`);
+    if (!grid) return;
+    grid.innerHTML = byCategory[cat].length
+      ? byCategory[cat].map(compoundCardHTML).join('')
+      : '<p class="loading-note">No compounds in this category yet.</p>';
+  });
+}
+
+function impurityRowHTML(i) {
+  return `<tr data-search="${esc(i.name.toLowerCase())}"><td>${esc(i.name)}</td><td>${esc(i.mf || '—')}</td><td>${esc(i.mw || '—')}</td></tr>`;
+}
+
+async function loadImpurities() {
+  const snap = await getDocs(collection(db, 'impurities'));
+  const byParent = {};
+  snap.forEach(docSnap => {
+    const i = docSnap.data();
+    if (!byParent[i.parent]) byParent[i.parent] = [];
+    byParent[i.parent].push(i);
+  });
+
+  const parents = Object.keys(byParent).sort();
+  const btnContainer = document.getElementById('impTabButtons');
+  const contentContainer = document.getElementById('impTabContent');
+
+  if (!parents.length) {
+    btnContainer.innerHTML = '<p class="loading-note">No impurity data yet.</p>';
+    return;
+  }
+
+  btnContainer.innerHTML = parents.map((p, idx) => {
+    byParent[p].sort((a, b) => (a.order || 0) - (b.order || 0));
+    const active = idx === 0 ? ' active' : '';
+    return `<button class="tab-btn${active}" data-imp-tab="imp-${esc(p)}">${esc(labelForParent(p))} <span class="imp-count">(${byParent[p].length})</span></button>`;
+  }).join('');
+
+  contentContainer.innerHTML = parents.map((p, idx) => {
+    const active = idx === 0 ? ' active' : '';
+    return `<div class="tab-pane${active}" id="imp-${esc(p)}">
+<div class="impurity-table-wrap">
+<table class="impurity-table">
+<thead><tr><th>Impurity / Related Substance</th><th>Molecular Formula</th><th>Molecular Weight</th></tr></thead>
+<tbody>${byParent[p].map(impurityRowHTML).join('')}</tbody>
+</table>
+</div>
+</div>`;
+  }).join('');
+
+  btnContainer.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-imp-tab');
+      btnContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      contentContainer.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+}
+
+function setupSearch() {
+  const input = document.getElementById('compoundSearch');
+  const clearBtn = document.getElementById('searchClear');
+  const status = document.getElementById('searchStatus');
+
+  function runSearch() {
+    const term = input.value.trim().toLowerCase();
+    clearBtn.style.display = term ? 'block' : 'none';
+
+    if (!term) {
+      document.querySelectorAll('.compound-card').forEach(el => el.style.display = '');
+      document.querySelectorAll('.impurity-table tr[data-search]').forEach(el => el.style.display = '');
+      document.querySelectorAll('#peptide-apis, #other-apis, #manufacturing').forEach(el => el.classList.remove('is-hidden-by-search'));
+      status.textContent = '';
+      return;
+    }
+
+    let totalMatches = 0;
+    ['peptide-apis', 'other-apis', 'manufacturing'].forEach(cat => {
+      const catEl = document.getElementById(cat);
+      let matches = 0;
+      catEl.querySelectorAll('.compound-card').forEach(card => {
+        const hit = card.getAttribute('data-search').includes(term);
+        card.style.display = hit ? '' : 'none';
+        if (hit) { matches++; totalMatches++; }
+      });
+      catEl.classList.toggle('is-hidden-by-search', matches === 0);
+    });
+
+    document.querySelectorAll('.impurity-table tr[data-search]').forEach(row => {
+      const hit = row.getAttribute('data-search').includes(term);
+      row.style.display = hit ? '' : 'none';
+      if (hit) totalMatches++;
+    });
+
+    status.textContent = totalMatches
+      ? `${totalMatches} match${totalMatches === 1 ? '' : 'es'} found`
+      : 'No matches found. Try a different name, CAS number or synonym.';
+  }
+
+  input.addEventListener('input', runSearch);
+  clearBtn.addEventListener('click', () => { input.value = ''; runSearch(); input.focus(); });
+}
+
+Promise.all([loadCompounds(), loadImpurities()]).then(setupSearch).catch(err => {
+  console.error('Failed to load product data from Firestore:', err);
+  document.querySelectorAll('.loading-note').forEach(el => {
+    el.textContent = 'Could not load product data right now. Please refresh, or contact us if this continues.';
+  });
+});
+</script>
 </body>
 </html>
