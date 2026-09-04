@@ -98,6 +98,71 @@ transition: var(--transition);
 width: 100%;
 }
 
+/* Products dropdown */
+.nav-dropdown {
+position: relative;
+}
+
+.nav-dropdown > a {
+display: flex;
+align-items: center;
+gap: 0.35rem;
+}
+
+.nav-dropdown > a i {
+font-size: 0.7rem;
+transition: var(--transition);
+}
+
+.nav-dropdown:hover > a i {
+transform: rotate(180deg);
+}
+
+.dropdown-menu {
+position: absolute;
+top: calc(100% + 14px);
+left: 50%;
+transform: translate(-50%, -8px);
+background: var(--white);
+min-width: 250px;
+box-shadow: var(--shadow-hover);
+border-radius: 8px;
+padding: 0.5rem 0;
+list-style: none;
+opacity: 0;
+visibility: hidden;
+transition: var(--transition);
+z-index: 1001;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+opacity: 1;
+visibility: visible;
+transform: translate(-50%, 0);
+}
+
+.dropdown-menu li {
+list-style: none;
+}
+
+.dropdown-menu a {
+display: block;
+padding: 0.65rem 1.3rem;
+color: var(--text-dark);
+font-weight: 500;
+font-size: 0.92rem;
+white-space: nowrap;
+}
+
+.dropdown-menu a::after {
+display: none;
+}
+
+.dropdown-menu a:hover {
+background: var(--bg-light);
+color: var(--primary-color);
+}
+
 .hamburger {
 display: none;
 flex-direction: column;
@@ -638,6 +703,30 @@ transition: var(--transition);
 
 .nav-menu.active {
 right: 0;
+}
+
+.dropdown-menu {
+position: static;
+opacity: 1;
+visibility: visible;
+transform: none;
+box-shadow: none;
+background: var(--bg-light);
+border-radius: 6px;
+margin-top: 0.5rem;
+display: none;
+}
+
+.nav-dropdown.open .dropdown-menu {
+display: block;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+transform: none;
+}
+
+.nav-dropdown > a i {
+margin-left: auto;
 }
 
 .hero h1 {
