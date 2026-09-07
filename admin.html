@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Trinadh Industries</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body { background: var(--bg-light); }
+
+.admin-topbar {
+background: var(--white);
+box-shadow: var(--shadow);
+padding: 1rem 0;
+}
+
+.admin-topbar .container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.admin-topbar .nav-brand {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 1.3rem;
+font-weight: 700;
+color: var(--primary-color);
+}
+
+.admin-user {
+display: flex;
+align-items: center;
+gap: 1rem;
+font-size: 0.9rem;
+color: var(--text-light);
+}
+
+.btn-small {
+padding: 0.5rem 1.2rem;
+font-size: 0.85rem;
+}
+
+.btn-danger {
+background: #d9362e;
+color: var(--white);
+}
+
+.btn-danger:hover {
+background: #b3261e;
+}
+
+.admin-main {
+max-width: 1100px;
+margin: 0 auto;
+padding: 2.5rem 20px 4rem;
+}
+
+.admin-card {
+background: var(--white);
+border-radius: 10px;
+box-shadow: var(--shadow);
+padding: 2rem;
+margin-bottom: 2rem;
+}
+
+.admin-card h2 {
+color: var(--primary-color);
+margin-bottom: 0.3rem;
+}
+
+.admin-card .card-note {
+color: var(--text-light);
+font-size: 0.9rem;
+margin-bottom: 1.5rem;
+}
+
+.form-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1.2rem 1.5rem;
+}
+
+.form-grid .full-width {
+grid-column: 1 / -1;
+}
+
+.form-section-label {
+font-weight: 600;
+color: var(--text-dark);
+font-size: 0.85rem;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin: 1rem 0 0.3rem;
+grid-column: 1 / -1;
+border-top: 1px solid #eee;
+padding-top: 1.2rem;
+}
+
+.form-section-label:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
+.form-actions {
+display: flex;
+gap: 1rem;
+margin-top: 1.5rem;
+}
+
+.form-actions .btn { flex: 0 0 auto; }
+
+#formStatus {
+font-size: 0.88rem;
+margin-top: 1rem;
+padding: 0.7rem 1rem;
+border-radius: 6px;
+display: none;
+}
+
+#formStatus.success { background: #e6f4ea; color: #1e7e34; display: block; }
+#formStatus.error { background: #fdecea; color: #b3261e; display: block; }
+
+.list-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 1rem;
+margin-bottom: 1.2rem;
+flex-wrap: wrap;
+}
+
+.list-toolbar input {
+padding: 0.6rem 1rem;
+border: 2px solid #ddd;
+border-radius: 50px;
+font-family: inherit;
+min-width: 260px;
+}
+
+.admin-table-wrap { overflow-x: auto; }
+
+.admin-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.92rem;
+}
+
+.admin-table th, .admin-table td {
+padding: 0.7rem 0.9rem;
+text-align: left;
+border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+color: var(--text-light);
+font-size: 0.78rem;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.admin-table tr:hover { background: var(--bg-light); }
+
+.cat-badge {
+display: inline-block;
+padding: 0.2rem 0.6rem;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: 600;
+background: #e0f2f1;
+color: var(--secondary-color);
+}
+
+.row-actions { display: flex; gap: 0.5rem; }
+
+.row-actions button {
+border: none;
+background: none;
+cursor: pointer;
+font-size: 0.95rem;
+padding: 0.3rem 0.5rem;
+border-radius: 4px;
+}
+
+.row-actions .edit-btn { color: var(--primary-color); }
+.row-actions .edit-btn:hover { background: #e0f2f1; }
+.row-actions .delete-btn { color: #d9362e; }
+.row-actions .delete-btn:hover { background: #fdecea; }
+
+.gate-note {
+text-align: center;
+padding: 4rem 1rem;
+color: var(--text-light);
+}
+</style>
+</head>
+<body>
+
+<div id="authGate" class="gate-note">
+<i class="fas fa-spinner fa-spin" style="font-size:1.8rem;"></i>
+<p style="margin-top:1rem;">Checking sign-in status&hellip;</p>
+</div>
+
+<div id="adminApp" style="display:none;">
+<div class="admin-topbar">
+<div class="container">
+<div class="nav-brand"><i class="fas fa-flask"></i><span>Trinadh Industries &mdash; Admin</span></div>
+<div class="admin-user">
+<span id="userEmailLabel"></span>
+<a href="products.html" class="btn btn-secondary btn-small" style="color:var(--primary-color); border-color:var(--primary-color);" target="_blank">View site</a>
+<button type="button" class="btn btn-danger btn-small" id="signOutBtn">Sign Out</button>
+</div>
+</div>
+</div>
+
+<div class="admin-main">
+
+<div class="admin-card">
+<h2 id="formTitle">Add a Compound</h2>
+<p class="card-note">Fields marked * are required. New compounds appear on the public Products page immediately.</p>
+
+<form id="compoundForm">
+<input type="hidden" id="docId" value="">
+<div class="form-grid">
+<div class="form-section-label">Compound details</div>
+
+<div class="form-group">
+<label for="fName">Name *</label>
+<input type="text" id="fName" required>
+</div>
+<div class="form-group">
+<label for="fCas">CAS No.</label>
+<input type="text" id="fCas" placeholder="e.g. 910463-68-2">
+</div>
+<div class="form-group">
+<label for="fMf">Molecular Formula (MF)</label>
+<input type="text" id="fMf" placeholder="e.g. C187H291N45O59">
+</div>
+<div class="form-group">
+<label for="fMw">Molecular Weight (MW)</label>
+<input type="text" id="fMw" placeholder="e.g. 4114 g/mol">
+</div>
+<div class="form-group">
+<label for="fSmiles">SMILES</label>
+<input type="text" id="fSmiles" placeholder="Canonical SMILES string">
+</div>
+<div class="form-group">
+<label for="fInchikey">InChIKey</label>
+<input type="text" id="fInchikey" placeholder="e.g. DLSWIYLPEUIQAV-CCUURXOWSA-N">
+</div>
+<div class="form-group">
+<label for="fImage">Image URL</label>
+<input type="text" id="fImage" placeholder="Link to a structure image (e.g. PubChem)">
+</div>
+<div class="form-group">
+<label for="fIupac">IUPAC Name</label>
+<input type="text" id="fIupac" placeholder="Full IUPAC name (optional)">
+</div>
+<div class="form-group full-width">
+<label for="fSynonyms">Synonyms</label>
+<input type="text" id="fSynonyms" placeholder="Comma-separated alternative names / brand names">
+</div>
+
+<div class="form-section-label">Where it appears on the site</div>
+
+<div class="form-group">
+<label for="fCategory">Category *</label>
+<select id="fCategory" required>
+<option value="peptide-apis">Peptide APIs</option>
+<option value="other-apis">Other APIs</option>
+<option value="manufacturing">Supplying &amp; Manufacturing</option>
+</select>
+</div>
+<div class="form-group">
+<label for="fGrade">Grade</label>
+<input type="text" id="fGrade" placeholder="e.g. Peptide API, USP / BP / EP">
+</div>
+<div class="form-group full-width">
+<label for="fDescription">Description</label>
+<input type="text" id="fDescription" placeholder="One-line description shown under the compound name">
+</div>
+<div class="form-group">
+<label for="fOrder">Display order</label>
+<input type="number" id="fOrder" min="1">
+</div>
+</div>
+
+<div id="formStatus"></div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary" id="submitBtn"><i class="fas fa-plus"></i> Add Compound</button>
+<button type="button" class="btn btn-secondary" id="cancelEditBtn" style="display:none; color:var(--primary-color); border-color:var(--primary-color);">Cancel</button>
+</div>
+</form>
+</div>
+
+<div class="admin-card">
+<h2>Existing Compounds</h2>
+<div class="list-toolbar">
+<input type="text" id="listFilter" placeholder="Filter by name or CAS&hellip;">
+<span id="listCount" style="color:var(--text-light); font-size:0.88rem;"></span>
+</div>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead>
+<tr><th>Name</th><th>CAS No.</th><th>Category</th><th>Grade</th><th style="text-align:right;">Actions</th></tr>
+</thead>
+<tbody id="compoundTableBody">
+<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+
+<script type="module">
+import { auth, db } from './js/firebase-config.js';
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import {
+  collection, getDocs, doc, setDoc, deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const CATEGORY_LABELS = {
+  'peptide-apis': 'Peptide APIs',
+  'other-apis': 'Other APIs',
+  'manufacturing': 'Manufacturing',
+};
+
+let allCompounds = []; // {id, ...fields}
+let editingId = null;
+
+const authGate = document.getElementById('authGate');
+const adminApp = document.getElementById('adminApp');
+const userEmailLabel = document.getElementById('userEmailLabel');
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+  userEmailLabel.textContent = user.email;
+  authGate.style.display = 'none';
+  adminApp.style.display = 'block';
+  loadCompounds();
+});
+
+document.getElementById('signOutBtn').addEventListener('click', async () => {
+  await signOut(auth);
+  window.location.href = 'login.html';
+});
+
+function slugify(text) {
+  const s = text.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return s || 'item';
+}
+
+function uniqueSlug(base) {
+  let id = base, n = 2;
+  const existing = new Set(allCompounds.map(c => c.id));
+  while (existing.has(id)) { id = `${base}-${n}`; n++; }
+  return id;
+}
+
+async function loadCompounds() {
+  const snap = await getDocs(collection(db, 'compounds'));
+  allCompounds = [];
+  snap.forEach(d => allCompounds.push({ id: d.id, ...d.data() }));
+  allCompounds.sort((a, b) => {
+    if (a.category !== b.category) return (a.category || '').localeCompare(b.category || '');
+    return (a.order || 0) - (b.order || 0);
+  });
+  renderTable();
+}
+
+function renderTable() {
+  const filter = document.getElementById('listFilter').value.trim().toLowerCase();
+  const tbody = document.getElementById('compoundTableBody');
+  const rows = allCompounds.filter(c => {
+    if (!filter) return true;
+    return (c.name || '').toLowerCase().includes(filter) || (c.cas || '').toLowerCase().includes(filter);
+  });
+
+  document.getElementById('listCount').textContent = `${rows.length} of ${allCompounds.length} compound${allCompounds.length === 1 ? '' : 's'}`;
+
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">No compounds match.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(c => `
+<tr>
+<td>${escapeHtml(c.name)}</td>
+<td>${escapeHtml(c.cas || '—')}</td>
+<td><span class="cat-badge">${escapeHtml(CATEGORY_LABELS[c.category] || c.category || '—')}</span></td>
+<td>${escapeHtml(c.grade || '—')}</td>
+<td>
+<div class="row-actions" style="justify-content:flex-end;">
+<button type="button" class="edit-btn" data-id="${escapeHtml(c.id)}" title="Edit"><i class="fas fa-pen"></i></button>
+<button type="button" class="delete-btn" data-id="${escapeHtml(c.id)}" title="Delete"><i class="fas fa-trash"></i></button>
+</div>
+</td>
+</tr>`).join('');
+
+  tbody.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => startEdit(btn.getAttribute('data-id')));
+  });
+  tbody.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => handleDelete(btn.getAttribute('data-id')));
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
+
+function startEdit(id) {
+  const c = allCompounds.find(x => x.id === id);
+  if (!c) return;
+  editingId = id;
+
+  document.getElementById('docId').value = id;
+  document.getElementById('fName').value = c.name || '';
+  document.getElementById('fCas').value = c.cas || '';
+  document.getElementById('fMf').value = c.mf || '';
+  document.getElementById('fMw').value = c.mw || '';
+  document.getElementById('fSmiles').value = c.smiles || '';
+  document.getElementById('fInchikey').value = c.inchikey || '';
+  document.getElementById('fImage').value = c.image || '';
+  document.getElementById('fIupac').value = c.iupacName || '';
+  document.getElementById('fSynonyms').value = c.synonyms || '';
+  document.getElementById('fCategory').value = c.category || 'peptide-apis';
+  document.getElementById('fGrade').value = c.grade || '';
+  document.getElementById('fDescription').value = c.description || '';
+  document.getElementById('fOrder').value = c.order || '';
+
+  document.getElementById('formTitle').textContent = `Edit "${c.name}"`;
+  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Update Compound';
+  document.getElementById('cancelEditBtn').style.display = 'inline-block';
+  document.getElementById('formStatus').style.display = 'none';
+
+  document.querySelector('.admin-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetForm() {
+  editingId = null;
+  document.getElementById('compoundForm').reset();
+  document.getElementById('docId').value = '';
+  document.getElementById('formTitle').textContent = 'Add a Compound';
+  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-plus"></i> Add Compound';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+
+document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+document.getElementById('listFilter').addEventListener('input', renderTable);
+
+async function handleDelete(id) {
+  const c = allCompounds.find(x => x.id === id);
+  if (!c) return;
+  if (!confirm(`Delete "${c.name}"? This cannot be undone.`)) return;
+  try {
+    await deleteDoc(doc(db, 'compounds', id));
+    if (editingId === id) resetForm();
+    await loadCompounds();
+  } catch (err) {
+    alert('Could not delete: ' + err.message);
+  }
+}
+
+document.getElementById('compoundForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const status = document.getElementById('formStatus');
+  status.className = '';
+  status.style.display = 'none';
+
+  const name = document.getElementById('fName').value.trim();
+  const category = document.getElementById('fCategory').value;
+  if (!name) return;
+
+  const data = {
+    name,
+    cas: document.getElementById('fCas').value.trim(),
+    mf: document.getElementById('fMw').value.trim(),
+    smiles: document.getElementById('fSmiles').value.trim(),
+    inchikey: document.getElementById('fInchikey').value.trim(),
+    image: document.getElementById('fImage').value.trim(),
+    iupacName: document.getElementById('fIupac').value.trim(),
+    synonyms: document.getElementById('fSynonyms').value.trim(),
+    category,
+    grade: document.getElementById('fGrade').value.trim(),
+    description: document.getElementById('fDescription').value.trim(),
+    pubchemUrl: '',
+    order: parseInt(document.getElementById('fOrder').value, 10) || 0,
+  };
+
+  // Preserve pubchemUrl when editing an existing compound that already had one.
+  if (editingId) {
+    const existing = allCompounds.find(x => x.id === editingId);
+    if (existing && existing.pubchemUrl) data.pubchemUrl = existing.pubchemUrl;
+  }
+
+  if (!data.order) {
+    const inCategory = allCompounds.filter(c => c.category === category && c.id !== editingId);
+    data.order = inCategory.length ? Math.max(...inCategory.map(c => c.order || 0)) + 1 : 1;
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+
+  try {
+    const id = editingId || uniqueSlug(slugify(name));
+    await setDoc(doc(db, 'compounds', id), data);
+    status.textContent = editingId ? 'Compound updated.' : 'Compound added.';
+    status.className = 'success';
+    status.style.display = 'block';
+    resetForm();
+    await loadCompounds();
+  } catch (err) {
+    status.textContent = 'Could not save: ' + err.message;
+    status.className = 'error';
+    status.style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
