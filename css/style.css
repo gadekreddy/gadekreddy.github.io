@@ -58,6 +58,16 @@ font-size: 1.5rem;
 font-weight: 700;
 color: var(--primary-color);
 }
+.cta-item i {
+font-size: 1.5rem;
+}
+
+.cta-item-lines {
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+text-align: left;
+}
 
 .nav-brand i {
 font-size: 2rem;
