@@ -312,6 +312,56 @@ color: var(--text-light);
 </div>
 </div>
 
+<div class="admin-card">
+<h2 id="impFormTitle">Impurity Reference Standards</h2>
+<p class="card-note">These appear in the Impurity Reference Standards tables on the Products page, grouped by parent peptide. Add, edit or delete them here.</p>
+<form id="impForm">
+<div class="form-grid">
+<div class="form-group full-width">
+<label for="iName">Impurity name *</label>
+<input type="text" id="iName" required>
+</div>
+<div class="form-group">
+<label for="iParent">Parent (slug) *</label>
+<input type="text" id="iParent" list="impParentList" required placeholder="e.g. tirzepatide">
+<datalist id="impParentList"></datalist>
+</div>
+<div class="form-group">
+<label for="iMf">Molecular Formula</label>
+<input type="text" id="iMf">
+</div>
+<div class="form-group">
+<label for="iMw">Molecular Weight</label>
+<input type="text" id="iMw">
+</div>
+<div class="form-group">
+<label for="iOrder">Display order</label>
+<input type="number" id="iOrder" min="1">
+</div>
+</div>
+<div id="impStatus" style="font-size:0.88rem; margin-top:1rem;"></div>
+<div class="form-actions">
+<button type="submit" class="btn btn-primary" id="impSubmitBtn"><i class="fas fa-plus"></i> Add Impurity</button>
+<button type="button" class="btn btn-secondary" id="impCancelBtn" style="display:none; color:var(--primary-color); border-color:var(--primary-color);">Cancel</button>
+</div>
+</form>
+
+<div class="list-toolbar" style="margin-top:2rem;">
+<input type="text" id="impFilter" placeholder="Filter by name or parent&hellip;">
+<span id="impCount" style="color:var(--text-light); font-size:0.88rem;"></span>
+</div>
+<div class="admin-table-wrap">
+<table class="admin-table">
+<thead>
+<tr><th>Name</th><th>Parent</th><th>MF</th><th>MW</th><th style="text-align:right;">Actions</th></tr>
+</thead>
+<tbody id="impTableBody">
+<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -344,6 +394,7 @@ onAuthStateChanged(auth, (user) => {
   authGate.style.display = 'none';
   adminApp.style.display = 'block';
   loadCompounds();
+  loadImpurities();
 });
 
 document.getElementById('signOutBtn').addEventListener('click', async () => {
@@ -484,7 +535,8 @@ document.getElementById('compoundForm').addEventListener('submit', async (e) => 
   const data = {
     name,
     cas: document.getElementById('fCas').value.trim(),
-    mf: document.getElementById('fMw').value.trim(),
+    mf: document.getElementById('fMf').value.trim(),
+    mw: document.getElementById('fMw').value.trim(),
     smiles: document.getElementById('fSmiles').value.trim(),
     inchikey: document.getElementById('fInchikey').value.trim(),
     image: document.getElementById('fImage').value.trim(),
@@ -525,6 +577,128 @@ document.getElementById('compoundForm').addEventListener('submit', async (e) => 
     status.style.display = 'block';
   } finally {
     submitBtn.disabled = false;
+  }
+});
+
+// ---------- Impurity reference standards ----------
+let allImps = [];
+let editingImpId = null;
+
+async function loadImpurities() {
+  const snap = await getDocs(collection(db, 'impurities'));
+  allImps = [];
+  snap.forEach(d => allImps.push({ id: d.id, ...d.data() }));
+  allImps.sort((a, b) => {
+    if (a.parent !== b.parent) return (a.parent || '').localeCompare(b.parent || '');
+    return (a.order || 0) - (b.order || 0);
+  });
+  document.getElementById('impParentList').innerHTML =
+    [...new Set(allImps.map(i => i.parent).filter(Boolean))].map(p => `<option value="${escapeHtml(p)}">`).join('');
+  renderImpTable();
+}
+
+function renderImpTable() {
+  const filter = document.getElementById('impFilter').value.trim().toLowerCase();
+  const tbody = document.getElementById('impTableBody');
+  const rows = allImps.filter(i => !filter ||
+    (i.name || '').toLowerCase().includes(filter) || (i.parent || '').toLowerCase().includes(filter));
+  document.getElementById('impCount').textContent = `${rows.length} of ${allImps.length} impurities`;
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">No impurities match.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(i => `
+<tr>
+<td>${escapeHtml(i.name)}</td>
+<td><span class="cat-badge">${escapeHtml(i.parent || '—')}</span></td>
+<td>${escapeHtml(i.mf || '—')}</td>
+<td>${escapeHtml(i.mw || '—')}</td>
+<td><div class="row-actions" style="justify-content:flex-end;">
+<button type="button" class="edit-btn" data-id="${escapeHtml(i.id)}" title="Edit"><i class="fas fa-pen"></i></button>
+<button type="button" class="delete-btn" data-id="${escapeHtml(i.id)}" title="Delete"><i class="fas fa-trash"></i></button>
+</div></td>
+</tr>`).join('');
+  tbody.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => startImpEdit(b.getAttribute('data-id'))));
+  tbody.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', () => deleteImp(b.getAttribute('data-id'))));
+}
+
+function startImpEdit(id) {
+  const i = allImps.find(x => x.id === id);
+  if (!i) return;
+  editingImpId = id;
+  document.getElementById('iName').value = i.name || '';
+  document.getElementById('iParent').value = i.parent || '';
+  document.getElementById('iMf').value = i.mf || '';
+  document.getElementById('iMw').value = i.mw || '';
+  document.getElementById('iOrder').value = i.order || '';
+  document.getElementById('impFormTitle').textContent = `Edit "${i.name}"`;
+  document.getElementById('impSubmitBtn').innerHTML = '<i class="fas fa-save"></i> Update Impurity';
+  document.getElementById('impCancelBtn').style.display = 'inline-block';
+  document.getElementById('impStatus').textContent = '';
+  document.getElementById('impForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetImpForm() {
+  editingImpId = null;
+  document.getElementById('impForm').reset();
+  document.getElementById('impFormTitle').textContent = 'Impurity Reference Standards';
+  document.getElementById('impSubmitBtn').innerHTML = '<i class="fas fa-plus"></i> Add Impurity';
+  document.getElementById('impCancelBtn').style.display = 'none';
+}
+
+async function deleteImp(id) {
+  const i = allImps.find(x => x.id === id);
+  if (!i || !confirm(`Delete "${i.name}"? This cannot be undone.`)) return;
+  try {
+    await deleteDoc(doc(db, 'impurities', id));
+    if (editingImpId === id) resetImpForm();
+    await loadImpurities();
+  } catch (err) {
+    alert('Could not delete: ' + err.message);
+  }
+}
+
+document.getElementById('impCancelBtn').addEventListener('click', resetImpForm);
+document.getElementById('impFilter').addEventListener('input', renderImpTable);
+
+document.getElementById('impForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const status = document.getElementById('impStatus');
+  const name = document.getElementById('iName').value.trim();
+  const parent = slugify(document.getElementById('iParent').value);
+  if (!name) return;
+  const data = {
+    name,
+    parent,
+    mf: document.getElementById('iMf').value.trim(),
+    mw: document.getElementById('iMw').value.trim(),
+    order: parseInt(document.getElementById('iOrder').value, 10) || 0,
+  };
+  if (!data.order) {
+    const same = allImps.filter(i => i.parent === parent && i.id !== editingImpId);
+    data.order = same.length ? Math.max(...same.map(i => i.order || 0)) + 1 : 1;
+  }
+  const btn = document.getElementById('impSubmitBtn');
+  btn.disabled = true;
+  try {
+    let id = editingImpId;
+    if (!id) {
+      const base = slugify(parent + '-' + name);
+      const taken = new Set(allImps.map(i => i.id));
+      id = base;
+      let n = 2;
+      while (taken.has(id)) { id = `${base}-${n}`; n++; }
+    }
+    await setDoc(doc(db, 'impurities', id), data);
+    status.style.color = '#1e7e34';
+    status.textContent = editingImpId ? 'Impurity updated.' : 'Impurity added.';
+    resetImpForm();
+    await loadImpurities();
+  } catch (err) {
+    status.style.color = '#b3261e';
+    status.textContent = 'Could not save: ' + err.message;
+  } finally {
+    btn.disabled = false;
   }
 });
 </script>
