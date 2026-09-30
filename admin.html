@@ -299,14 +299,15 @@ color: var(--text-light);
 <div class="list-toolbar">
 <input type="text" id="listFilter" placeholder="Filter by name or CAS&hellip;">
 <span id="listCount" style="color:var(--text-light); font-size:0.88rem;"></span>
+<button type="button" class="btn btn-danger btn-small" id="bulkDelBtn" style="display:none;"><i class="fas fa-trash"></i> Delete selected (<span id="bulkDelN">0</span>)</button>
 </div>
 <div class="admin-table-wrap">
 <table class="admin-table">
 <thead>
-<tr><th>Name</th><th>CAS No.</th><th>Category</th><th>Grade</th><th style="text-align:right;">Actions</th></tr>
+<tr><th style="width:32px;"><input type="checkbox" id="selAll" title="Select all shown"></th><th>Name</th><th>CAS No.</th><th>Category</th><th>Grade</th><th style="text-align:right;">Actions</th></tr>
 </thead>
 <tbody id="compoundTableBody">
-<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
+<tr><td colspan="6" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
 </tbody>
 </table>
 </div>
@@ -349,14 +350,15 @@ color: var(--text-light);
 <div class="list-toolbar" style="margin-top:2rem;">
 <input type="text" id="impFilter" placeholder="Filter by name or parent&hellip;">
 <span id="impCount" style="color:var(--text-light); font-size:0.88rem;"></span>
+<button type="button" class="btn btn-danger btn-small" id="impBulkDelBtn" style="display:none;"><i class="fas fa-trash"></i> Delete selected (<span id="impBulkDelN">0</span>)</button>
 </div>
 <div class="admin-table-wrap">
 <table class="admin-table">
 <thead>
-<tr><th>Name</th><th>Parent</th><th>MF</th><th>MW</th><th style="text-align:right;">Actions</th></tr>
+<tr><th style="width:32px;"><input type="checkbox" id="impSelAll" title="Select all shown"></th><th>Name</th><th>Parent</th><th>MF</th><th>MW</th><th style="text-align:right;">Actions</th></tr>
 </thead>
 <tbody id="impTableBody">
-<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
+<tr><td colspan="6" style="text-align:center; color:var(--text-light); padding:2rem;">Loading&hellip;</td></tr>
 </tbody>
 </table>
 </div>
@@ -414,6 +416,61 @@ function uniqueSlug(base) {
   return id;
 }
 
+// ---------- Multi-select / bulk delete ----------
+const selCompounds = new Set();
+const selImps = new Set();
+
+// Wires the row checkboxes, the select-all box and the bulk-delete button for one table.
+function bindSelection(tbody, selected, selAllId, btnId, countId, shownRows) {
+  const selAll = document.getElementById(selAllId);
+  const btn = document.getElementById(btnId);
+  const boxes = [...tbody.querySelectorAll('.row-sel')];
+
+  function refresh() {
+    document.getElementById(countId).textContent = selected.size;
+    btn.style.display = selected.size ? 'inline-block' : 'none';
+    selAll.checked = boxes.length > 0 && boxes.every(b => b.checked);
+    selAll.indeterminate = !selAll.checked && boxes.some(b => b.checked);
+  }
+
+  boxes.forEach(b => b.addEventListener('change', () => {
+    const id = b.getAttribute('data-id');
+    if (b.checked) selected.add(id); else selected.delete(id);
+    refresh();
+  }));
+  selAll.onchange = () => {
+    boxes.forEach(b => {
+      b.checked = selAll.checked;
+      const id = b.getAttribute('data-id');
+      if (selAll.checked) selected.add(id); else selected.delete(id);
+    });
+    refresh();
+  };
+  refresh();
+}
+
+async function bulkDelete(collName, selected, list, label) {
+  const ids = [...selected];
+  if (!ids.length) return;
+  const names = ids.slice(0, 8).map(id => (list.find(x => x.id === id) || {}).name || id);
+  const more = ids.length > 8 ? `\n…and ${ids.length - 8} more` : '';
+  if (!confirm(`Delete ${ids.length} ${label}? This cannot be undone.\n\n${names.join('\n')}${more}`)) return;
+  const results = await Promise.allSettled(ids.map(id => deleteDoc(doc(db, collName, id))));
+  const failed = results.filter(r => r.status === 'rejected');
+  ids.forEach((id, k) => { if (results[k].status === 'fulfilled') selected.delete(id); });
+  if (failed.length) alert(`${ids.length - failed.length} deleted, ${failed.length} failed: ${failed[0].reason.message}`);
+}
+
+document.getElementById('bulkDelBtn').addEventListener('click', async () => {
+  await bulkDelete('compounds', selCompounds, allCompounds, 'compounds');
+  if (selCompounds.size === 0 && editingId && !allCompounds.some(c => c.id === editingId)) resetForm();
+  await loadCompounds();
+});
+document.getElementById('impBulkDelBtn').addEventListener('click', async () => {
+  await bulkDelete('impurities', selImps, allImps, 'impurities');
+  await loadImpurities();
+});
+
 async function loadCompounds() {
   const snap = await getDocs(collection(db, 'compounds'));
   allCompounds = [];
@@ -436,12 +493,13 @@ function renderTable() {
   document.getElementById('listCount').textContent = `${rows.length} of ${allCompounds.length} compound${allCompounds.length === 1 ? '' : 's'}`;
 
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">No compounds match.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-light); padding:2rem;">No compounds match.</td></tr>';
     return;
   }
 
   tbody.innerHTML = rows.map(c => `
 <tr>
+<td><input type="checkbox" class="row-sel" data-id="${escapeHtml(c.id)}"${selCompounds.has(c.id) ? ' checked' : ''}></td>
 <td>${escapeHtml(c.name)}</td>
 <td>${escapeHtml(c.cas || '—')}</td>
 <td><span class="cat-badge">${escapeHtml(CATEGORY_LABELS[c.category] || c.category || '—')}</span></td>
@@ -460,6 +518,7 @@ function renderTable() {
   tbody.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', () => handleDelete(btn.getAttribute('data-id')));
   });
+  bindSelection(tbody, selCompounds, 'selAll', 'bulkDelBtn', 'bulkDelN', rows);
 }
 
 function escapeHtml(str) {
@@ -604,11 +663,12 @@ function renderImpTable() {
     (i.name || '').toLowerCase().includes(filter) || (i.parent || '').toLowerCase().includes(filter));
   document.getElementById('impCount').textContent = `${rows.length} of ${allImps.length} impurities`;
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-light); padding:2rem;">No impurities match.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-light); padding:2rem;">No impurities match.</td></tr>';
     return;
   }
   tbody.innerHTML = rows.map(i => `
 <tr>
+<td><input type="checkbox" class="row-sel" data-id="${escapeHtml(i.id)}"${selImps.has(i.id) ? ' checked' : ''}></td>
 <td>${escapeHtml(i.name)}</td>
 <td><span class="cat-badge">${escapeHtml(i.parent || '—')}</span></td>
 <td>${escapeHtml(i.mf || '—')}</td>
@@ -620,6 +680,7 @@ function renderImpTable() {
 </tr>`).join('');
   tbody.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => startImpEdit(b.getAttribute('data-id'))));
   tbody.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', () => deleteImp(b.getAttribute('data-id'))));
+  bindSelection(tbody, selImps, 'impSelAll', 'impBulkDelBtn', 'impBulkDelN', rows);
 }
 
 function startImpEdit(id) {
