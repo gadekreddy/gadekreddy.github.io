@@ -350,20 +350,52 @@ function structureImageUrl(u) {
   return m ? `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${m[1]}/PNG?image_size=large` : (u || '');
 }
 
-// PubChem throttles bursts of image requests; retry failed structure images with a growing delay.
-document.addEventListener('error', (e) => {
-  const img = e.target;
-  if (!(img instanceof HTMLImageElement) || !img.closest('.compound-image')) return;
-  const tries = Number(img.dataset.tries || 0);
-  if (tries >= 5) return;
-  img.dataset.tries = tries + 1;
-  if (!img.dataset.src) img.dataset.src = img.src.replace(/[?&]_r=\d+$/, '');
-  setTimeout(() => { img.src = img.dataset.src + (img.dataset.src.includes('?') ? '&' : '?') + '_r=' + Date.now(); }, 1200 * (tries + 1));
-}, true);
+// PubChem throttles bursts of image requests (some fail, some hang), so structure images are
+// loaded through a small queue: 3 at a time, each retried with a growing delay if it fails or stalls.
+const imgQueue = [];
+let imgActive = 0;
+
+function loadStructureImage(img, attempt) {
+  const url = img.dataset.src;
+  const probe = new Image();
+  let settled = false;
+  const finish = (ok) => {
+    if (settled) return;
+    settled = true;
+    clearTimeout(timer);
+    if (ok) {
+      img.src = url;
+      imgActive--; pumpImageQueue();
+    } else if (attempt < 5) {
+      imgActive--; pumpImageQueue();
+      setTimeout(() => imgQueue.push([img, attempt + 1]) && pumpImageQueue(), 1500 * (attempt + 1));
+    } else {
+      imgActive--; pumpImageQueue();
+      img.removeAttribute('data-src'); // give up; alt text remains
+    }
+  };
+  const timer = setTimeout(() => finish(false), 12000);
+  probe.onload = () => finish(true);
+  probe.onerror = () => finish(false);
+  probe.src = url + (attempt ? (url.includes('?') ? '&' : '?') + '_r=' + Date.now() : '');
+}
+
+function pumpImageQueue() {
+  while (imgActive < 3 && imgQueue.length) {
+    const [img, attempt] = imgQueue.shift();
+    imgActive++;
+    loadStructureImage(img, attempt);
+  }
+}
+
+function queueStructureImages(root) {
+  root.querySelectorAll('.compound-image img[data-src]').forEach(img => imgQueue.push([img, 0]));
+  pumpImageQueue();
+}
 
 function compoundCardHTML(c) {
   const img = c.image
-    ? `<img src="${esc(structureImageUrl(c.image))}" alt="${esc(c.name)} structure" loading="lazy">`
+    ? `<img data-src="${esc(structureImageUrl(c.image))}" alt="${esc(c.name)} structure">`
     : `<div class="no-structure-note"><i class="fas fa-dna"></i><span>No structure image<br>available</span></div>`;
 
   const iupac = c.iupacName ? `<p class="compound-iupac">${esc(c.iupacName)}</p>` : '';
@@ -417,6 +449,7 @@ async function loadCompounds() {
       ? byCategory[cat].map(compoundCardHTML).join('')
       : '<p class="loading-note">No compounds in this category yet.</p>';
   });
+  queueStructureImages(document);
 }
 
 function impurityRowHTML(i) {
