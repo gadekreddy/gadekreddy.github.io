@@ -350,6 +350,17 @@ function structureImageUrl(u) {
   return m ? `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${m[1]}/PNG?image_size=large` : (u || '');
 }
 
+// PubChem throttles bursts of image requests; retry failed structure images with a growing delay.
+document.addEventListener('error', (e) => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.closest('.compound-image')) return;
+  const tries = Number(img.dataset.tries || 0);
+  if (tries >= 5) return;
+  img.dataset.tries = tries + 1;
+  if (!img.dataset.src) img.dataset.src = img.src.replace(/[?&]_r=\d+$/, '');
+  setTimeout(() => { img.src = img.dataset.src + (img.dataset.src.includes('?') ? '&' : '?') + '_r=' + Date.now(); }, 1200 * (tries + 1));
+}, true);
+
 function compoundCardHTML(c) {
   const img = c.image
     ? `<img src="${esc(structureImageUrl(c.image))}" alt="${esc(c.name)} structure" loading="lazy">`
