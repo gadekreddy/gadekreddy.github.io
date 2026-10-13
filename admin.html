@@ -404,6 +404,13 @@ document.getElementById('signOutBtn').addEventListener('click', async () => {
   window.location.href = 'login.html';
 });
 
+// PubChem now puts imgsrv.fcgi behind a bot check, so those links show as broken images.
+// The PUG REST PNG endpoint serves the same structure drawing without it.
+function structureImageUrl(u) {
+  const m = /pubchem\.ncbi\.nlm\.nih\.gov\/image\/imgsrv\.fcgi\?[^#]*?\bcid=(\d+)/i.exec(u || '');
+  return m ? `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${m[1]}/PNG?image_size=large` : (u || '');
+}
+
 function slugify(text) {
   const s = text.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   return s || 'item';
@@ -598,7 +605,7 @@ document.getElementById('compoundForm').addEventListener('submit', async (e) => 
     mw: document.getElementById('fMw').value.trim(),
     smiles: document.getElementById('fSmiles').value.trim(),
     inchikey: document.getElementById('fInchikey').value.trim(),
-    image: document.getElementById('fImage').value.trim(),
+    image: structureImageUrl(document.getElementById('fImage').value.trim()),
     iupacName: document.getElementById('fIupac').value.trim(),
     synonyms: document.getElementById('fSynonyms').value.trim(),
     category,

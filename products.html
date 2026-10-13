@@ -343,9 +343,16 @@ function esc(str) {
   return div.innerHTML;
 }
 
+// PubChem now puts imgsrv.fcgi behind a bot check, so those links show as broken images.
+// The PUG REST PNG endpoint serves the same structure drawing without it.
+function structureImageUrl(u) {
+  const m = /pubchem\.ncbi\.nlm\.nih\.gov\/image\/imgsrv\.fcgi\?[^#]*?\bcid=(\d+)/i.exec(u || '');
+  return m ? `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${m[1]}/PNG?image_size=large` : (u || '');
+}
+
 function compoundCardHTML(c) {
   const img = c.image
-    ? `<img src="${esc(c.image)}" alt="${esc(c.name)} structure" loading="lazy">`
+    ? `<img src="${esc(structureImageUrl(c.image))}" alt="${esc(c.name)} structure" loading="lazy">`
     : `<div class="no-structure-note"><i class="fas fa-dna"></i><span>No structure image<br>available</span></div>`;
 
   const iupac = c.iupacName ? `<p class="compound-iupac">${esc(c.iupacName)}</p>` : '';
