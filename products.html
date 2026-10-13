@@ -364,7 +364,7 @@ function loadStructureImage(img, attempt) {
     settled = true;
     clearTimeout(timer);
     if (ok) {
-      img.src = url;
+      img.src = probe.src; // the exact URL that just loaded (a plain retry would hit PubChem's cached error)
       imgActive--; pumpImageQueue();
     } else if (attempt < 5) {
       imgActive--; pumpImageQueue();
